@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_head %}
+  <title>Nastavenia</title>
+{% endblock %}
+
+{% block content %}
+
+    {% include 'navbar.html' %}
+    <div class="top-margin-reservation"></div>
+
+    <div class="container-settings-tables">
+        <div class="table-container-settings">
+            <h2>Nastavenia - Roman</h2>
+            <table class="table-settings">
+                <tbody>
+                    <tr>
+                        <td><label for="days_ahead_roman">Koĺko dní od dnes sa môžu ľudia rezervovať </label></td>
+                        <td><input type="number" id="days_ahead_roman" value="{{ days_ahead_roman }}"></td>
+                        <td><button class="btn" onclick="saveDaysAhead('roman', 'days_ahead_roman')">Uložiť</button></td>
+                    </tr>
+                    <tr>
+                        <td>Pondelok:</td>
+                        <td>
+                            <select id="start_time_monday" name="start_time_monday"></select>
+                            <select id="end_time_monday" name="end_time_monday"></select>
+                        </td>
+                        <td><button class="btn" onclick="saveTimeRange('start_time_monday', 'end_time_monday')">Uložiť</button></td>
+                    </tr>
+                    <tr>
+                        <td>Utorok:</td>
+                        <td>
+                            <select id="start_time_tuesday" name="start_time_tuesday"></select>
+                            <select id="end_time_tuesday" name="end_time_tuesday"></select>
+                        </td>
+                        <td><button class="btn" onclick="saveTimeRange('start_time_tuesday', 'end_time_tuesday')">Uložiť</button></td>
+                    </tr>
+                    <tr>
+                        <td>Streda:</td>
+                        <td>
+                            <select id="start_time_wednesday" name="start_time_wednesday"></select>
+                            <select id="end_time_wednesday" name="end_time_wednesday"></select>
+                        </td>
+                        <td><button class="btn" onclick="saveTimeRange('start_time_wednesday', 'end_time_wednesday')">Uložiť</button></td>
+                    </tr>
+                    <tr>
+                        <td>Štvrtok:</td>
+                        <td>
+                            <select id="start_time_thursday" name="start_time_thursday"></select>
+                            <select id="end_time_thursday" name="end_time_thursday"></select>
+                        </td>
+                        <td><button class="btn" onclick="saveTimeRange('start_time_thursday', 'end_time_thursday')">Uložiť</button></td>
+                    </tr>
+                    <tr>
+                        <td>Piatok:</td>
+                        <td>
+                            <select id="start_time_friday" name="start_time_friday"></select>
+                            <select id="end_time_friday" name="end_time_friday"></select>
+                        </td>
+                        <td><button class="btn" onclick="saveTimeRange('start_time_friday', 'end_time_friday')">Uložiť</button></td>
+                    </tr>
+                    <tr>
+                        <td>Sobota:</td>
+                        <td>
+                            <select id="start_time_saturday" name="start_time_saturday"></select>
+                            <select id="end_time_saturday" name="end_time_saturday"></select>
+                        </td>
+                        <td><button class="btn" onclick="saveTimeRange('start_time_saturday', 'end_time_saturday')">Uložiť</button></td>
+                    </tr>
+                    <tr>
+                        <td>Nedeľa:</td>
+                        <td>
+                            <select id="start_time_sunday" name="start_time_sunday"></select>
+                            <select id="end_time_sunday" name="end_time_sunday"></select>
+                        </td>
+                        <td><button class="btn" onclick="saveTimeRange('start_time_sunday', 'end_time_sunday')">Uložiť</button></td>
+                    </tr>
+                    <tr>
+                        <td>Ktoré dni pracujem:</td>
+                        <td id="working_days_container"></td>
+                        <td><button class="btn" onclick="saveWorkingDays()">Uložiť</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="table-container-settings">
+            <h2>Obmedzenia</h2>
+            <table class="table-settings">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Dátum</th>
+                        <th>Celý deň</th>
+                        <th>Od do</th>
+                        <th><button class="btn" onclick="addTurnedOffDay()">Pridať</button></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for turned_off_day in turned_off_days_data %}
+                        <tr>
+                            <td><input type="checkbox" value="{{ turned_off_day.id }}" class="turned-off-day-checkbox" style="cursor: pointer;"></td>
+                            <td>{{turned_off_day.date}}</td>
+                            <td>{% if turned_off_day.whole_day %}<i class="fa-duotone fa-solid fa-circle-check"></i>{% else %}<i class="fa-duotone fa-solid fa-circle-xmark"></i>{% endif %}</td>
+                            <td>{{turned_off_day.time_range}}</td>
+                            <td>
+                                <button class="deactivate-btn" onclick="cancelOffDay('{{ turned_off_day.id }}')">Zrušiť</button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    <tr class="hidden-initially" id="cancel-all-days-tr">
+                        <td colspan="5" class="hidden-initially" id="cancel-all-days-td" style="border: none;">
+                            <button class="deactivate-btn" onclick="cancelOffDays()">Zrušiť označené</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block extra_scripts %}
+    <script>
+        var workingDays = '{{working_days}}';
+
+        var startingSlotHourMonday = '{{starting_slot_hour_monday}}';
+        var endingSlotHourMonday = '{{ending_slot_hour_monday}}';
+        var startingSlotHourTuesday = '{{starting_slot_hour_tuesday}}';
+        var endingSlotHourTuesday = '{{ending_slot_hour_tuesday}}';
+        var startingSlotHourWednesday = '{{starting_slot_hour_wednesday}}';
+        var endingSlotHourWednesday = '{{ending_slot_hour_wednesday}}';
+        var startingSlotHourThursday = '{{starting_slot_hour_thursday}}';
+        var endingSlotHourThursday = '{{ending_slot_hour_thursday}}';
+        var startingSlotHourFriday = '{{starting_slot_hour_friday}}';
+        var endingSlotHourFriday = '{{ending_slot_hour_friday}}';
+        var startingSlotHourSaturday = '{{starting_slot_hour_saturday}}';
+        var endingSlotHourSaturday = '{{ending_slot_hour_saturday}}';
+        var startingSlotHourSunday = '{{starting_slot_hour_sunday}}';
+        var endingSlotHourSunday = '{{ending_slot_hour_sunday}}';
+    </script>
+    <script src="{% static 'scripts/settings_view.js' %}"></script>
+{% endblock %}

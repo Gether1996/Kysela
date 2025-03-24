@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block extra_head %}
+    <title>PK Relax Fit</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Brush+Script+MT&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Luminari&display=swap">
+    <meta name="google-site-verification" content="RBYjh0_gAGhqf_K4wPSsz79kxLVAUMPng7TD-a0jQcY" />
+{% endblock %}
+
+{% block content %}
+
+    {% include 'navbar-homepage.html' %}
+
+    <div class="top-margin-homepage"></div>
+
+    <section id="about-us">
+       <div class="about-us-container">
+           <div class="person-container">
+               <img class="roman-image" src="{% static 'images/roman.jpg' %}">
+               <div class="person-info">
+                   <h3 class="name-surname">
+                       Pavol Kysela
+                   </h3>
+                   <ul class="technique-list">
+                       <li>{% trans 'Klasická masáž' %}</li>
+                       <li>{% trans 'Športová masáž' %}</li>
+                       <li>{% trans 'Mäkké a myofasciálne techniky' %}</li>
+                       <li>{% trans 'Bankovanie' %}</li>
+                       <li>IASTM {% trans 'terapia' %}</li>
+                   </ul>
+               </div>
+           </div>
+       </div>
+
+       <div style="display: flex; justify-content: center">
+           <a href="{% url 'reservation' %}" class="reservation-button-about-us"><i class="fa-solid fa-calendar-circle-plus"></i> {% trans 'Rezervovať termín' %}</a>
+       </div>
+    </section>
+
+    <section id="technique">
+       <h1>{% trans 'Techniky' %}</h1>
+
+      <div class="technique-segment">
+        <div class="summary">
+          <h2 style="cursor: pointer;" onclick="showP(1)"><i class="fa-solid fa-square-chevron-down"></i> {% trans 'Klasická masáž' %}</h2>
+          <p id="p1">{% trans 'Klasická masáž aktivuje celkový krvný a lymfatický obeh, ktorý následne zlepšuje okysličenie organizmu a odlev škodlivých látok z tela. Zlepšuje prekrvenie pokožky, podkožia a svalov, pomáha uvoľňovať stuhnuté a bolestivé svaly a podieľa sa na lepšom vyplavovaní odpadových látok z organizmu. Pomáha aj pri emocionálnom napätí a prináša úľavu telu aj duši. Je vhodná takmer pre každého či už na uvoľnenie stresu, odstránenie bolesti alebo pri prevencií či regenerácií.' %}</p>
+        </div>
+        <div class="summary">
+          <h2 style="cursor: pointer;" onclick="showP(2)"><i class="fa-solid fa-square-chevron-down"></i> {% trans 'Mäkké a myofasciálne techniky' %}</h2>
+          <p id="p2">{% trans 'Mäkké a myofasciálne techniky sú masážne techniky, ktoré primárne uvoľnujú mäkké tkanivá – svaly. <br><br>V porovnaní s klasickou masážou môže byť mierne bolestivejšia a vykonáva sa bez oleja. Najprv sa uvoľnuje krčná chrbtica v sede a následne sa v ľahu pokračuje dole až ku kostrči. Je výborným doplnkom športovej alebo klasickej masáže. Taktiež je výbornou metódou na zastavenie procesu stuhnutia alebo uvoľňovania svalov.' %}</p>
+        </div>
+        <div class="summary">
+          <h2 style="cursor: pointer;" onclick="showP(3)"><i class="fa-solid fa-square-chevron-down"></i> {% trans 'Športová masáž' %}</h2>
+          <p id="p3">{% trans 'Športová masáž je veľmi podobná klasickej masáži, keďže využíva väčšinu hmatov klasickej relaxačnej masáže, je však prispôsobená špeciálne pre športovcov, ktorí podávajú náročnejšie fyzické výkony, a to na základe typu športu a tým, či sa vykonáva pred alebo po výkone. Od klasickej masáže sa líši najmä v rytme a intenzite masážnych hmatov. Slúži v prvom rade na zvýšenie kondície a uvoľnenie po náročnej fyzickej záťaži. Zároveň je skvelou voľbou ako prevencia pred úrazmi. Samotná masáž vplýva aj na psychickú stránku, uvoľňuje stres pred pretekmi a pozitívne vplýva na podané výkony.' %}</p>
+        </div>
+      </div>
+
+     <div class="technique-segment">
+        <div class="summary">
+          <h2 style="cursor: pointer;" onclick="showP(4)"><i class="fa-solid fa-square-chevron-down"></i> {% trans 'Bankovanie' %}</h2>
+          <p id="p4">{% trans 'Pri bankovaní prikladáme sklenné banky s nahriatym vzduchom, v tých sa ochladzovaním vytvorí podtlak a banka sa na kožu prisaje. Podtlak vtiahne časť kože aj podkožia do banky, čím sa prekrvia, no môže nastať aj popraskanie drobných cievok. Okysličia sa kritické body a odplavia sa škodlivé látky. <br><br> Po bankovaní môžu na mieste priloženia ostať farebné stopy (bezbolestné), ktoré však v priebehu pár dní zmiznú.' %}</p>
+        </div>
+        <div class="summary">
+          <h2 style="cursor: pointer;" onclick="showP(5)"><i class="fa-solid fa-square-chevron-down"></i> {% trans 'Lávové kamene' %}</h2>
+          <p id="p5">{% trans 'Lávové kamene z čadiča absorbujú, udržiavajú a následne odovzdávajú teplo, čo pozitívne pôsobí nielen na pokožku, podkožie a svaly, ale zlepšujú aj prekrvenie ciev, cirkuláciu, stimulujú lymfatický systém, urýchľujú metabolizmus a detoxikujú telo. Výrazným benefitom tejto masáže je priaznivý vplyv na psychiku, pôsobí antistresovo až antidepresívne. Kamene sú istým prepojením človeka so Zemou, harmóniou s prírodou. Ich účinkom sa teda harmonizuje a regeneruje nielen telo ale aj myseľ.' %}</p>
+        </div>
+        <div class="summary">
+          <h2 style="cursor: pointer;" onclick="showP(6)"><i class="fa-solid fa-square-chevron-down"></i> IASTM {% trans 'terapia' %}</h2>
+                <p id="p6" style="text-align: left;">
+                    <span style="text-align: center; width: 100%;">{% trans 'IASTM (Instrument Assisted Soft Tissue Mobilization) predstavuje moderný terapeutický prístup v oblasti fasciálnej mobilizácie a celkovej terapie fascií ľudského tela. Pôsobením IASTM nástrojov dochádza vo fasciách ku vzniku stresového podnetu, tlaku a tepla, čo napomáha v rámci správneho fungovania fascií.' %}</span>
+                    <br><br>
+                    <span>{% trans 'Výhody IASTM' %}:</span>
+                    <br>
+                    <br>
+                    - {% trans 'Zníženie bolesti' %}
+                    <br>
+                    - {% trans 'Zlepšuje rozsah pohybu' %}
+                    <br>
+                    - {% trans 'Zlepšuje pružnosť a elasticitu tkanív' %}
+                    <br>
+                    - {% trans 'Mobilizuje mäkké tkanivá' %}
+                </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="gallery">
+        <h1>{% trans 'Galéria' %}</h1>
+            <div class="gallery-container">
+                {% for photo in photos %}
+                    <img src="{{ photo.photo }}" onclick="openBiggerImage('{{ photo.photo }}')">
+                {% endfor %}
+            </div>
+            <div id="myModal" class="modal">
+                <span class="close">&times;</span>
+                <img class="modal-content" id="img01">
+            </div>
+    </section>
+
+    <section id="poukazka" style="margin-bottom: 100px;">
+        <h1>{% trans 'Poukážky' %}</h1>
+        <div class="gallery-container-poukazka">
+            {% for voucher in vouchers %}
+                <div class="voucher-download-container">
+                <img src="{{ voucher.photo }}" onclick="openBiggerImage('{{ voucher.photo }}')">
+                <a class="download-button" href="{{ voucher.photo }}" download>{% trans 'Stiahnúť' %}<i class="fa-duotone fa-arrow-down-to-line"></i></a>
+                </div>
+            {% endfor %}
+        </div>
+        <div id="myModal" class="modal">
+            <span class="close">&times;</span>
+            <img class="modal-content" id="img01">
+        </div>
+    </section>
+
+    <section id="spolupraca">
+        <h1>{% trans 'Pre firmy' %}</h1>
+        <h3>{% trans 'Jedinečná príležitosť dopriať svojim zamestnancom relax od práce' %}</h3>
+        <h3>{% trans 'prostredníctvom poukážok upravených pre Vašu firmu na mieru.' %}</h3>
+        <h3>{% trans 'Spolupracujte s nami a prineste do svojho pracovného prostredia novú úroveň pohody.' %}</h3>
+        <h3>{% trans 'Pre viac informácii nás kontaktujte.' %}</h3>
+    </section>
+
+    <section id="contact">
+        <div class="contact-container">
+            <div class="contact-info">
+                <p>{% trans 'PK Relax Fit' %}</p>
+                <p><i class="fa-regular fa-map-location-dot"></i> Na rybník 636, 013 01 Teplička nad Váhom</p>
+                <p><i class="fa-duotone fa-phone"></i> +421 903 773 400</p>
+                <p><i class="fa-duotone fa-envelope"></i> kyspa@kyspa.sk</p>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+
+{% block extra_scripts %}
+    <script src="{% static 'scripts/homepage.js' %}"></script>
+{% endblock %}
