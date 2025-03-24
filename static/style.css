@@ -573,8 +573,8 @@ body {
     width: 95%;
     font-size: 24px;
     margin-bottom: 20px;
-    color: #0056b3;
-    border-bottom: 2px solid #0056b3;
+    color: #3fbb46;;
+    border-bottom: 2px solid #3fbb46;;
     padding-bottom: 10px;
 }
 
@@ -619,7 +619,7 @@ body {
 .table-settings .btn,
 .table-settings .deactivate-btn,
 .table-profile .deactivate-btn {
-    background-color: #0056b3;
+    background-color: #3fbb46;;
     color: white;
     border: none;
     padding: 10px 20px;
@@ -632,7 +632,7 @@ body {
 .table-settings .btn:hover,
 .table-settings .deactivate-btn:hover,
 .table-profile .deactivate-btn:hover {
-    background-color: #003d80;
+    background-color: #266d2a;
 }
 
 .table-settings .deactivate-btn,
@@ -689,7 +689,7 @@ body {
 .option-button-person.selected, .option-button-time.selected {
     background-color: #3fbb46; /* Change background color when selected */
     color: white; /* Change text color when selected */
-    border-color: #0056b3; /* Change border color when selected */
+    border-color: #3fbb46;; /* Change border color when selected */
     transform: scale(1.1); /* Slightly larger scale for selected buttons */
 }
 
@@ -1380,8 +1380,8 @@ body {
         width: 100%;
         font-size: 20px;
         margin-bottom: 10px;
-        color: #0056b3;
-        border-bottom: 2px solid #0056b3;
+        color: #3fbb46;;
+        border-bottom: 2px solid #3fbb46;
     }
 
     .table-container-profile {

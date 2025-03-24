@@ -202,13 +202,11 @@ function initializeWorkingDays(working_days_person, container_name, person) {
                 selectedDays[person].delete(day);
             }
         });
-
         container.appendChild(button);
     });
 }
 
-window.onload = initializeWorkingDays(workingDays, 'working_days_container_roman', 'roman');
-window.onload = initializeWorkingDays(workingDaysEvka, 'working_days_container_evka', 'evka');
+window.onload = initializeWorkingDays(workingDays, 'working_days_container');
 
 function addTurnedOffDay() {
     Swal.fire({

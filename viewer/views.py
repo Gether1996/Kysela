@@ -133,6 +133,8 @@ def settings(request):
         'ending_slot_hour_sunday': ending_slot_hour_sunday,
     }
 
+    print(working_days)
+
     return render(request, 'settings_view.html', context)
 
 def profile(request):

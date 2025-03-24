@@ -1,5 +1,5 @@
 var Swal = Swal.mixin({
-  confirmButtonColor: '#244b90',
+  confirmButtonColor: '#3fbb46',
   cancelButtonText: isEnglish ? 'Cancel' : 'Zrušiť',
 });
 

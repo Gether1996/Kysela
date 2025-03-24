@@ -79,16 +79,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'Roman.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'mysql.connector.django',
-        'NAME': 'c0masazevlcince',
-        'USER': 'c0masazevlcince',
-        'PASSWORD': 'd6@rK7Vu',
+        'NAME': 'c0masazekysela',
+        'USER': 'c0masazekysela',
+        'PASSWORD': 'PwgM9#Y8bm',
         'HOST': 'mail.314.sk',
         'PORT': '3306',
         'OPTIONS': {

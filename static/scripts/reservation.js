@@ -229,6 +229,14 @@ function pickDate(clickedDateElement = null) {
         element.classList.remove('hidden-element-timeSlots');
     });
 
+    document.querySelectorAll('.add-hidden-second').forEach(element => {
+        element.classList.add('hidden-element-second');
+    });
+
+    document.querySelectorAll('.add-hidden-third').forEach(element => {
+        element.classList.add('hidden-element-third');
+    });
+
     mainContainer.innerHTML = '';
     selectedDate.style.border = '1px solid black';
 
@@ -607,12 +615,33 @@ document.addEventListener('DOMContentLoaded', function() {
 function updateEvents() {
     const previouslySelected = document.querySelector('.selected-date');
     const userSelectButton = document.querySelector('.user-select');
+    const pickedTimeSlot = document.getElementById('picked-time-slot');
+    const selectedDate = document.getElementById('date');
     if (previouslySelected) {
         previouslySelected.classList.remove('selected-date');
+    }
+    if (pickedTimeSlot) {
+        pickedTimeSlot.classList.remove('selected');
     }
     if (userSelectButton) {
         userSelectButton.remove();
     }
+
+    selectedDate.value = "";
+
+    hiddenTimeSlotAll = document.querySelectorAll('.add-hidden-timeSlots');
+    hiddenTimeSlotAll.forEach(element => {
+        element.classList.add('hidden-element-timeSlots');
+    });
+
+    document.querySelectorAll('.add-hidden-second').forEach(element => {
+        element.classList.add('hidden-element-second');
+    });
+
+    document.querySelectorAll('.add-hidden-third').forEach(element => {
+        element.classList.add('hidden-element-third');
+    });
+
     // Show the loading Swal
     Swal.fire({
         allowOutsideClick: false, // Prevent closing by clicking outside
