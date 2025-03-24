@@ -1,7 +1,4 @@
-const selectedDays = {
-    roman: new Set(),
-    evka: new Set()
-};
+const selectedDays = new Set();
 
 function saveDaysAhead(days_ahead_person) {
     var days_ahead = document.getElementById(days_ahead_person).value;
@@ -11,14 +8,12 @@ function saveDaysAhead(days_ahead_person) {
 }
 
 function saveTimeRange(time_from, time_to) {
-    // Extract the day from the IDs
     const dayMatch = time_from.match(/_(monday|tuesday|wednesday|thursday|friday|saturday|sunday)$/);
     const day = dayMatch ? dayMatch[1] : '';
 
     var time_from_value = document.getElementById(time_from).value;
     var time_to_value = document.getElementById(time_to).value;
 
-    // Construct the body based on the person and the extracted day
     var body;
     body = {
         [`time_from_${day}`]: time_from_value,
@@ -178,7 +173,7 @@ var dayLabels = {
     'Sunday': 'Ne'
 };
 
-function initializeWorkingDays(working_days_person, container_name, person) {
+function initializeWorkingDays(working_days_person, container_name) {
     var container = document.getElementById(container_name);
 
     Object.keys(dayLabels).forEach(day => {
@@ -190,23 +185,24 @@ function initializeWorkingDays(working_days_person, container_name, person) {
         // Pre-select the buttons based on workingDays
         if (working_days_person.includes(day)) {
             button.classList.add('selected');
-            selectedDays[person].add(day); // Initialize selected days
+            selectedDays.add(day);
         }
 
         // Add event listener for button clicks
         button.addEventListener('click', () => {
             button.classList.toggle('selected');
             if (button.classList.contains('selected')) {
-                selectedDays[person].add(day);
+                selectedDays.add(day);
             } else {
-                selectedDays[person].delete(day);
+                selectedDays.delete(day);
             }
         });
+
         container.appendChild(button);
     });
 }
 
-window.onload = initializeWorkingDays(workingDays, 'working_days_container');
+window.onload = () => initializeWorkingDays(workingDays, 'working_days_container');
 
 function addTurnedOffDay() {
     Swal.fire({

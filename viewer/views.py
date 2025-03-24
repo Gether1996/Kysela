@@ -133,8 +133,6 @@ def settings(request):
         'ending_slot_hour_sunday': ending_slot_hour_sunday,
     }
 
-    print(working_days)
-
     return render(request, 'settings_view.html', context)
 
 def profile(request):
@@ -153,8 +151,10 @@ def profile(request):
                 'time': reservation.get_time_range_string(),
                 'status': reservation.status,
                 'special_request': reservation.special_request,
+                'cancellation_reason': reservation.cancellation_reason if reservation.cancellation_reason else "",
                 'created_at': reservation.get_created_at_string(),
-                'is_past': datetime.now() > reservation.datetime_to
+                'is_past': datetime.now() > reservation.datetime_to,
+                'active': reservation.active
             }
             for reservation in reservations
         ]

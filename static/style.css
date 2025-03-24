@@ -789,7 +789,7 @@ body {
 }
 
 .table-second-tr-with-background {
-    background-color: #244b90;
+    background-color: #4caf50;
     color: white;
     padding: 10px;
     text-align: center;
@@ -936,7 +936,7 @@ body {
 }
 
 .add-employee-link:hover {
-    color: #244b90;
+    color: #4caf50;
     text-decoration: underline;
 }
 
@@ -956,7 +956,7 @@ body {
 }
 
 .card-header {
-    background-color: #244b90;
+    background-color: #4caf50;
     color: white;
 }
 
@@ -979,7 +979,7 @@ body {
 }
 
 .styled-checkbox:hover {
-    background-color: #244b90;
+    background-color: #4caf50;
     color: white;
 }
 
@@ -1015,13 +1015,13 @@ body {
 }
 
 .btn {
-    background-color: #cbd3e8;
+    background-color: #4caf50;
     color: black;
     font-size: 20px;
 }
 
 .btn:hover {
-    background-color: #244b90;
+    background-color: #4caf50;
     color: white;
 }
 
@@ -1441,7 +1441,7 @@ body {
     }
 
     .table-second-tr-with-background {
-        background-color: #244b90;
+        background-color: #4caf50;
         color: white;
         padding: 10px;
         text-align: center;

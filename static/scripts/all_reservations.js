@@ -50,7 +50,7 @@ function updateTable(reservations) {
 
         var actionButton = reservation.active ?
             `<button class="action-button" style='background-color: #dd3c3c; margin-bottom: 3px;' onclick="deactivateReservation('${reservation.id}', '${reservation.name_surname}')">Deaktivovať</button>` :
-            `<button class="action-button" style='background-color: #238b55; margin-bottom: 3px;' onclick="approveReservation('${reservation.id}', '${reservation.name_surname}')">Schváliť</button>`;
+            `<button class="action-button" style='background-color: #4caf50; margin-bottom: 3px;' onclick="approveReservation('${reservation.id}', '${reservation.name_surname}')">Schváliť</button>`;
 
         var row = document.createElement('tr');
         row.className = 'files-row';
@@ -68,7 +68,7 @@ function updateTable(reservations) {
             <td>${reservation.cancellation_reason}</td>
             <td class="text-align-center">
                 ${actionButton}
-                <button title="Poznámka" class="action-button" style='background-color: #238b55; margin-left: 2px;' onclick="addNote('${reservation.id}', '${reservation.name_surname}', '${reservation.personal_note}')"><i class="fa-solid fa-pen-to-square"></i></button>
+                <button title="Poznámka" class="action-button" style='background-color: #4caf50; margin-left: 2px;' onclick="addNote('${reservation.id}', '${reservation.name_surname}', '${reservation.personal_note}')"><i class="fa-solid fa-pen-to-square"></i></button>
                 <button title="Vymazať" class="action-button" style='background-color: #dd3c3c; margin-left: 2px;' onclick="deleteReservation('${reservation.id}', '${reservation.name_surname}')"><i class="fa-solid fa-trash"></i></button>
             </td>
         `;
@@ -118,10 +118,9 @@ function updatePaginateElements(pagination) {
             }
         }
 
-        // Add page numbers
         for (let page = start_page; page <= end_page; page++) {
             if (page === current_page) {
-                paginator.innerHTML += `<span style="background-color: #a7b8e7;" class="paginator-button btn">${page}</span>`;
+                paginator.innerHTML += `<span style="background-color: #3fbb46;" class="paginator-button btn">${page}</span>`;
             } else {
                 paginator.innerHTML += `<button class="btn paginator-button" onclick="fetchFilteredData(${page}, '${current_sort_by}', '${current_order}', 'reload')">${page}</button>`;
             }
@@ -236,14 +235,14 @@ function filterTable() {
     var rows = document.querySelectorAll('#filesBody .files-row');
 
     rows.forEach(row => {
-        var date = row.children[1].textContent.toLowerCase();                         // Updated: Date
-        var slot = row.children[2].textContent.toLowerCase();                         // Updated: Slot
-        var name_surname = removeDiacritics(row.children[3].textContent.toLowerCase()); // Updated: Name and Surname
-        var email = removeDiacritics(row.children[4].textContent.toLowerCase());       // Updated: Email
-        var phone_number = row.children[5].textContent.toLowerCase();                  // Updated: Phone Number
-        var created_at = row.children[6].textContent.toLowerCase();                    // Updated: Created At
-        var special_request = removeDiacritics(row.children[7].textContent.toLowerCase()); // Updated: Special Request
-        var status = removeDiacritics(row.children[8].textContent.toLowerCase());       // Updated: Status
+        var date = row.children[0].textContent.toLowerCase();                         // Updated: Date
+        var slot = row.children[1].textContent.toLowerCase();                         // Updated: Slot
+        var name_surname = removeDiacritics(row.children[2].textContent.toLowerCase()); // Updated: Name and Surname
+        var email = removeDiacritics(row.children[3].textContent.toLowerCase());       // Updated: Email
+        var phone_number = row.children[4].textContent.toLowerCase();                  // Updated: Phone Number
+        var created_at = row.children[5].textContent.toLowerCase();                    // Updated: Created At
+        var special_request = removeDiacritics(row.children[6].textContent.toLowerCase()); // Updated: Special Request
+        var status = removeDiacritics(row.children[7].textContent.toLowerCase());       // Updated: Status
 
         // Determine if the row matches the filter criteria
         var matches = Object.keys(filters).every(key => {

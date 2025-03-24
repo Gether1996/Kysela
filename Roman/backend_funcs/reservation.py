@@ -10,7 +10,6 @@ from django.template.loader import render_to_string
 
 config = configparser.ConfigParser()
 
-
 def send_email(subject, html_message, to_mail):
     from_email = getattr(settings, 'EMAIL_HOST_USER')
     send_mail(
@@ -101,7 +100,7 @@ def create_reservation(request):
             send_email(subject, html_message, getattr(settings, 'MAIN_EMAIL'))
 
         if note == 'admin' and new_reservation.email:
-            subject = f'Rezervácia potvrdená / Reservation accepted'
+            subject = f'Rezervácia potvrdená'
             html_message = render_to_string('email_template.html',
                                             {'reservation': prepare_reservation_data(new_reservation),
                                              'button': None,
@@ -350,7 +349,6 @@ def deactivate_reservation(request):
             reservation.cancellation_reason = json_data.get('reason')
             reservation.save()
             return JsonResponse({'status': 'success', 'message': _('Rezervácia úspešne zrušená.')})
-
         except Reservation.DoesNotExist:
             return JsonResponse({'status': 'error', 'message': _('Rezervácia sa nenašla.')})
     return JsonResponse({'status': 'error', 'message': _('Zlý request')})
@@ -364,7 +362,6 @@ def approve_reservation(request):
             reservation.active = True
             reservation.status = 'Schválená'
             reservation.save()
-
             if reservation.email:
                 subject = f'Rezervácia potvrdená / Reservation accepted'
                 html_message = render_to_string('email_template.html',
@@ -391,7 +388,7 @@ def deactivate_reservation_by_admin(request):
             reservation.save()
 
             if reservation.email:
-                subject = f'Rezervácia zamietnutá / Reservation cancelled'
+                subject = f'Rezervácia zamietnutá'
                 html_message = render_to_string('email_template.html',
                                                 {'reservation': prepare_reservation_data(reservation),
                                                  'button': None,

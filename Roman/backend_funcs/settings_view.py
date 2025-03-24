@@ -10,52 +10,30 @@ config.read('config.ini')
 def save_settings(request):
     if request.method == 'POST':
         json_data = json.loads(request.body)
-        print(json_data)
-
         days_of_week = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
-
-        days_ahead_roman = json_data.get('days_ahead_roman')
-        selected_days_roman = json_data.get('selected_days_roman')
-
-        days_ahead_evka = json_data.get('days_ahead_evka')
-        selected_days_evka = json_data.get('selected_days_evka')
-
+        days_ahead = json_data.get('days_ahead')
+        selected_days = json_data.get('selected_days')
         files_per_page = json_data.get('files_per_page')
 
         if files_per_page:
             config.set('settings', 'reservations_per_page', files_per_page)
-
-        if days_ahead_roman:
-            config.set('settings-roman', 'days_ahead', days_ahead_roman)
-        if selected_days_roman:
-            config.set('settings-roman', 'working_days', str(selected_days_roman))
+        if days_ahead:
+            config.set('settings', 'days_ahead', days_ahead)
+        if selected_days:
+            config.set('settings', 'working_days', str(selected_days))
 
         for day in days_of_week:
-            time_from_key_roman = f'time_from_roman_{day}'
-            time_to_key_roman = f'time_to_roman_{day}'
-            time_from_key_evka = f'time_from_evka_{day}'
-            time_to_key_evka = f'time_to_evka_{day}'
-            if json_data.get(time_from_key_roman):
-                config.set('settings-roman', f'{day}_starting_hour', json_data.get(time_from_key_roman))
-            if json_data.get(time_to_key_roman):
-                config.set('settings-roman', f'{day}_ending_hour', json_data.get(time_to_key_roman))
-            if json_data.get(time_from_key_evka):
-                config.set('settings-evka', f'{day}_starting_hour', json_data.get(time_from_key_evka))
-            if json_data.get(time_to_key_evka):
-                config.set('settings-evka', f'{day}_ending_hour', json_data.get(time_to_key_evka))
-
-        if days_ahead_evka:
-            config.set('settings-evka', 'days_ahead', days_ahead_evka)
-        if selected_days_evka:
-            config.set('settings-evka', 'working_days', str(selected_days_evka))
-
+            time_from_key = f'time_from_{day}'
+            time_to_key = f'time_to_{day}'
+            if json_data.get(time_from_key):
+                config.set('settings', f'{day}_starting_hour', json_data.get(time_from_key))
+            if json_data.get(time_to_key):
+                config.set('settings', f'{day}_ending_hour', json_data.get(time_to_key))
 
         with open('config.ini', 'w') as config_file:
             config.write(config_file)
-
         return JsonResponse({'status': 'success'})
     return JsonResponse({'status': 'error'})
-
 
 def add_turned_off_day(request):
     if request.method == 'POST':
@@ -85,7 +63,6 @@ def add_turned_off_day(request):
         return JsonResponse({'status': 'success'})
     return JsonResponse({'status': 'error'})
 
-
 def delete_turned_off_day(request):
     if request.method == 'DELETE':
         json_data = json.loads(request.body)
@@ -97,7 +74,6 @@ def delete_turned_off_day(request):
         except TurnedOffDay.DoesNotExist:
             return JsonResponse({'status': 'error', 'message': 'Obmedzenie sa nenašlo.'})
     return JsonResponse({'status': 'error'})
-
 
 def delete_turned_off_days(request):
     if request.method == 'DELETE':
