@@ -11,8 +11,42 @@ body {
     font-size: 40px;
 }
 
+.under-navbar-text {
+    height: 26px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    background: linear-gradient(135deg, #4CAF50, #2E7D32);
+    font-size: 18px;
+    color: white;
+}
+
+.info-buttons-container {
+    margin: auto;
+    margin-top: 50px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Two buttons per row */
+    gap: 30px; /* Space between buttons */
+}
+
+.info-masage-button {
+    padding: 10px 20px;
+    border: 2px solid #3fbb46;
+    border-radius: 3px;
+    transition: 0.2s;
+    background-color: white;
+    color: #3fbb46;
+    cursor: pointer;
+    font-size: 20px;
+    text-align: center;
+    height: 100px;
+    width: 250px;
+}
+
 .top-margin-homepage {
-    margin-top: 170px;
+    margin-top: 120px;
 }
 
 .top-margin-reservation {
@@ -296,14 +330,6 @@ body {
     background-color: #f1f1f1;
 }
 
-#technique {
-    margin-top: 100px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
 .swal-layout {
     display: flex;
     flex-direction: column;
@@ -314,6 +340,12 @@ body {
     display: flex;
     flex-direction: row;
     align-items: center;
+}
+
+.technique-list {
+    font-size: 18px;
+    margin: auto;
+    margin-left: 30px;
 }
 
 .h1-slogan,
@@ -336,24 +368,6 @@ body {
     font-size: 34px;
 }
 
-.technique-list {
-    font-size: 18px;
-    margin: auto;
-    margin-left: 30px;
-}
-
-.technique-segment {
-  width: 70%;
-  margin: 0 auto;
-  display: flex;
-  margin: 40px;
-  text-align: center;
-}
-
-.technique-segment p{
-    width: 70%;
-}
-
 .reservation-button-about-us {
     padding: 15px 30px;
     border: 2px solid #3fbb46;
@@ -369,28 +383,60 @@ body {
     margin: 40px;
 }
 
-.reservation-button-about-us:hover {
+.reservation-button-about-us:hover, .info-masage-button:hover {
     background-color: #f1f1f1;
-}
-
-.summary {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    width: 100%;
-}
-
-.summary p {
-    opacity: 0;
-    display: none;
-    transition: opacity 0.5s ease;
 }
 
 .visible {
     opacity: 1;
     transition-delay: 0.5s;
 }
+
+.price-table {
+    width: 100%;
+    max-width: 600px;
+    border-collapse: collapse;
+    font-family: 'Arial', sans-serif;
+    margin: 20px auto;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.price-table tr {
+    border-bottom: 1px solid #ddd;
+}
+
+.price-table td {
+    padding: 15px;
+    text-align: left;
+    font-size: 16px;
+}
+
+.price-table .category {
+    background: linear-gradient(135deg, #4CAF50, #2E7D32);
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    font-size: 18px;
+    text-transform: uppercase;
+}
+
+.price-table .highlight {
+    font-weight: bold;
+    color: #4CAF50;
+    text-align: right;
+}
+
+.price-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.price-table tr:hover {
+    background-color: #f1f1f1;
+    transition: 0.3s ease-in-out;
+}
+
 
 .about-us-container {
     display: flex;
@@ -417,6 +463,15 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: auto;
+}
+
+.technique-container {
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 #spolupraca h3 {
@@ -435,7 +490,7 @@ body {
     width: 60%;
 }
 
-#gallery {
+#gallery, #technique {
     margin-top: 100px;
     margin-bottom: 100px;
 }
@@ -452,10 +507,12 @@ body {
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
+    width: 70%;
+    margin: auto;
 }
 
 .gallery-container img {
-    width: calc(32% - 80px);
+    width: calc(32% - 50px);
     height: 500px;
     margin: 15px;
     box-sizing: border-box;
@@ -479,7 +536,7 @@ body {
 }
 
 .voucher-download-container img {
-    height: 400px;
+    height: 300px;
     width: 97%;
     margin: 15px;
     box-sizing: border-box;
@@ -1187,13 +1244,6 @@ body {
         font-size: 16px;
         display: flex;
         align-items: center;
-    }
-
-    .technique-list {
-        margin-left: 40px;
-        font-size: 13px;
-        margin-top: 0px;
-        margin-bottom: 50px;
     }
 
     .name-surname .social-icons {

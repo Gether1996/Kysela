@@ -7,6 +7,7 @@ class GalleryPhoto(Model):
 
 
 class VoucherPhoto(Model):
+    name = CharField(max_length=200, default=None, null=True, blank=True)
     photo = ImageField(upload_to='static/images/')
 
 
