@@ -4,6 +4,42 @@ let pickedDateGeneralData = null;
 
 updateEvents();
 
+function revealFirst() {
+    document.querySelectorAll('.add-hidden-first').forEach(element => {
+        element.classList.remove('hidden-element-first');
+    });
+}
+
+function revealSecond() {
+    document.querySelectorAll('.add-hidden-second').forEach(element => {
+        element.classList.remove('hidden-element-second');
+    });
+}
+
+function revealThird() {
+    document.querySelectorAll('.add-hidden-third').forEach(element => {
+        element.classList.remove('hidden-element-third');
+    });
+}
+
+function hideFirst() {
+    document.querySelectorAll('.add-hidden-first').forEach(element => {
+        element.classList.add('hidden-element-first');
+    });
+}
+
+function hideSecond() {
+    document.querySelectorAll('.add-hidden-second').forEach(element => {
+        element.classList.add('hidden-element-second');
+    });
+}
+
+function hideThird() {
+    document.querySelectorAll('.add-hidden-third').forEach(element => {
+        element.classList.add('hidden-element-third');
+    });
+}
+
 function moveToBottom() {
     setTimeout(() => {
         window.scrollTo({
@@ -39,7 +75,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (superUser === "true" && !userSelectButton) {
                 // Create the button only if it does not exist
                 userSelectButton = document.createElement('button');
-                userSelectButton.classList.add('user-select', 'big-button');
+                userSelectButton.classList.add('user-select', 'big-button', 'add-hidden-third');
                 userSelectButton.textContent = 'Vybrať uživateľa';
 
                 // Append the button to the main container
@@ -58,15 +94,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     : `Vytvoriť rezerváciu`;
                 finishButton.classList.add('finish-reservation-button', 'add-hidden-third', 'big-button');
                 finishButton.onclick = createReservation;
-
                 mainContainer.appendChild(finishButton);
             }
 
-            const hiddenElements = document.querySelectorAll('.hidden-element-third');
-            hiddenElements.forEach(element => {
-                element.classList.remove('hidden-element-third');
-            });
-
+            revealThird();
             moveToBottom();
         });
     });
@@ -208,7 +239,6 @@ $(document).ready(function() {
   });
 });
 
-
 function pickDate(clickedDateElement = null) {
     if (clickedDateElement) {
         // Remove the class from any previously clicked date (if needed)
@@ -220,24 +250,15 @@ function pickDate(clickedDateElement = null) {
         // Add the new class to the clicked date element
         clickedDateElement.classList.add('selected-date');
     }
-    var mainContainer = document.getElementById('time-slot-container');
+    var timeSlotContainer = document.getElementById('time-slot-container');
     var selectedDate = document.getElementById('date');
     pickedDateGeneralData = selectedDate.value;
 
-    hiddenTimeSlotAll = document.querySelectorAll('.add-hidden-timeSlots');
-    hiddenTimeSlotAll.forEach(element => {
-        element.classList.remove('hidden-element-timeSlots');
-    });
+    revealFirst();
+    hideSecond();
+    hideThird();
 
-    document.querySelectorAll('.add-hidden-second').forEach(element => {
-        element.classList.add('hidden-element-second');
-    });
-
-    document.querySelectorAll('.add-hidden-third').forEach(element => {
-        element.classList.add('hidden-element-third');
-    });
-
-    mainContainer.innerHTML = '';
+    timeSlotContainer.innerHTML = '';
     selectedDate.style.border = '1px solid black';
 
     Swal.fire({
@@ -281,11 +302,11 @@ function pickDate(clickedDateElement = null) {
                 var slots = Array.from(doc.querySelectorAll('button'));
 
                 slots.forEach(slot => fragment.appendChild(slot));
-                mainContainer.appendChild(fragment);
+                timeSlotContainer.appendChild(fragment);
             } else {
                 var textForApending = document.createElement('p');
                 textForApending.textContent = isEnglish ? 'No free slots left for today': 'Na dnes už nie sú voľné sloty';
-                mainContainer.appendChild(textForApending);
+                timeSlotContainer.appendChild(textForApending);
             }
 
             Swal.close();
@@ -352,13 +373,12 @@ function selectTimeSlot(button) {
             }
         });
 
-        console.log('Available durations:', availableDurations);
+        moveToBottom();
     })
     .catch(error => {
         console.error('Error:', error);
     });
 
-    moveToBottom();
 }
 
 function createReservation() {
@@ -501,9 +521,15 @@ function createReservation() {
                     Swal.close();
                     Swal.fire({
                         icon: 'success',
-                        title: isEnglish ? `Reservation created` : `Rezervácia vytvorená`,
+                        title: isUserSuperUser ? `Rezervácia vytvorená.`: `Rezervácia vytvorená, po potvrdení masérom Vám príde email.`,
                     }).then(() => {
-                        window.location.href = `/`;
+                        if (isUserLoggedIn === "yes" && isUserSuperUser === "yes") {
+                            window.location.href = `/reservation/`;
+                        } else if (isUserLoggedIn === "yes") {
+                            window.location.href = `/profile/`;
+                        } else {
+                            window.location.href = `/`;
+                        }
                     });
                 } else {
                     throw new Error('Failed to create reservation');
@@ -629,18 +655,9 @@ function updateEvents() {
 
     selectedDate.value = "";
 
-    hiddenTimeSlotAll = document.querySelectorAll('.add-hidden-timeSlots');
-    hiddenTimeSlotAll.forEach(element => {
-        element.classList.add('hidden-element-timeSlots');
-    });
-
-    document.querySelectorAll('.add-hidden-second').forEach(element => {
-        element.classList.add('hidden-element-second');
-    });
-
-    document.querySelectorAll('.add-hidden-third').forEach(element => {
-        element.classList.add('hidden-element-third');
-    });
+    hideFirst();
+    hideSecond();
+    hideThird();
 
     // Show the loading Swal
     Swal.fire({

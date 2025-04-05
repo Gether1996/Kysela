@@ -107,6 +107,7 @@
 
     <div class="column-container">
         <h1>{% trans 'Rezervácia' %}</h1>
+        <p style="margin-top: 0px;">Online sa môžete rezervovať minimálne 2 dni vopred, pre skorší termín (dnes / zajtra) kontaktujte +421 903 773 400</p>
 
         <div class="reservation-box-container">
             <div id="reservation-box-container" class="column-container">
@@ -115,8 +116,8 @@
                 <div class="calendar" id="calendar"></div>
                 <input type="date" id="date" class="insert-date-add-truck" onchange="pickDate()" readonly>
 
-                <h2 style="text-align: center;" class="hidden-element-timeSlots add-hidden-timeSlots">{% trans 'Vyberte začiatok masáže' %}:</h2>
-                <div id="time-slot-container" class="hidden-element-timeSlots add-hidden-timeSlots time-slot-container"></div>
+                <h2 style="text-align: center;" class="hidden-element-first add-hidden-first">{% trans 'Vyberte začiatok masáže' %}:</h2>
+                <div id="time-slot-container" class="hidden-element-first add-hidden-first time-slot-container"></div>
 
                 <hr class="hidden-element-second add-hidden-second hr-basic-style">
 
@@ -169,6 +170,8 @@
 
 {% block extra_scripts %}
     <script>
+        var isUserLoggedIn = {% if request.user.is_authenticated %}"yes"{% else %}"no"{% endif %};
+        var isUserSuperUser = {% if request.user.is_superuser %}"yes"{% else %}"no"{% endif %};
         var userOptions = {{ user_data|safe }};
     </script>
     <script src="{% static 'scripts/reservation.js' %}"></script>

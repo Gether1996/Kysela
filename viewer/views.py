@@ -38,7 +38,7 @@ def calendar_view_admin(request):
     for reservation in future_reservations:
         events.append({
             'id': reservation.id,
-            'title': f"{reservation.worker} - {reservation.name_surname}",
+            'title': f"{reservation.name_surname}",
             'start': reservation.datetime_from.isoformat(),
             'end': reservation.datetime_to.isoformat(),
             'borderColor': reservation.get_color(),
