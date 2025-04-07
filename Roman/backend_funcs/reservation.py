@@ -86,9 +86,11 @@ def create_reservation(request):
             )
 
         if note == 'user':
+            current_scheme = request.scheme  # 'http' or 'https'
+            current_domain = request.get_host()
             subject = f'Nová rezervácia'
-            accept_link = f'https://masazevlcince.sk/approve_reservation_mail/{new_reservation.id}/'
-            all_reservations_link = f'https://masazevlcince.sk/all_reservations/'
+            accept_link = f'{current_scheme}://{current_domain}/approve_reservation_mail/{new_reservation.id}/'
+            all_reservations_link = f'{current_scheme}://{current_domain}/all_reservations/'
             text = f'Nová rezervácia'
             html_message = render_to_string('email_template.html',
                                             {'reservation': prepare_reservation_data(new_reservation),
@@ -153,7 +155,7 @@ def check_available_slots(request):
             for turned_off_day in turned_off_days:
                 turned_off_start = turned_off_day.time_from
                 turned_off_end = turned_off_day.time_to
-
+                
                 # If the turned-off day covers the whole day, mark as unavailable
                 if turned_off_day.whole_day:
                     is_available = False

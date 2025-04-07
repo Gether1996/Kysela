@@ -518,10 +518,14 @@ function createReservation() {
                 }),
             }).then((response) => {
                 if (response.ok) {
+                    console.log("User logged in:", isUserLoggedIn);
+                    console.log("User is superuser:", isUserSuperUser);
                     Swal.close();
                     Swal.fire({
                         icon: 'success',
-                        title: isUserSuperUser ? `Rezervácia vytvorená.`: `Rezervácia vytvorená, po potvrdení masérom Vám príde email.`,
+                        title: (isUserLoggedIn.trim() === "yes" && isUserSuperUser.trim() === "yes")
+                        ? `Rezervácia vytvorená.`
+                        : `Rezervácia vytvorená, po potvrdení masérom Vám príde email.`,
                     }).then(() => {
                         if (isUserLoggedIn === "yes" && isUserSuperUser === "yes") {
                             window.location.href = `/reservation/`;

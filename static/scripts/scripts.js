@@ -23,8 +23,6 @@ function switchLanguage(language_code) {
 document.addEventListener('DOMContentLoaded', function() {
     var avatarIcon = document.getElementById('avatar-user-icon');
     var dropdownMenu = document.getElementById('dropdown-menu');
-    var languageButton = document.querySelector('.navbar-language-button');
-    var dropdownMenuLanguages = document.getElementById('dropdown-menu-languages');
 
     function toggleDropdown(dropdown, menu) {
         if (dropdown.opacity === '1') {
@@ -54,13 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
         event.stopPropagation();
     });
 
-    languageButton.addEventListener('click', function(event) {
-        toggleDropdown(dropdownMenuLanguages.style, dropdownMenuLanguages);
-        event.stopPropagation();
-    });
-
     window.addEventListener('click', function(event) {
         closeDropdownOnClickOutside(event, dropdownMenu.style, '#avatar-user-icon');
-        closeDropdownOnClickOutside(event, dropdownMenuLanguages.style, '.navbar-language-button');
     });
 });
