@@ -1,5 +1,6 @@
 let duration = null;
 let timeSlot = null;
+let massageType = null;
 let pickedDateGeneralData = null;
 
 updateEvents();
@@ -22,6 +23,24 @@ function revealThird() {
     });
 }
 
+function reveal30() {
+    document.querySelectorAll('.add-hidden-30').forEach(element => {
+        element.classList.remove('hidden-element-30');
+    });
+}
+
+function reveal45() {
+    document.querySelectorAll('.add-hidden-45').forEach(element => {
+        element.classList.remove('hidden-element-45');
+    });
+}
+
+function reveal60() {
+    document.querySelectorAll('.add-hidden-60').forEach(element => {
+        element.classList.remove('hidden-element-60');
+    });
+}
+
 function hideFirst() {
     document.querySelectorAll('.add-hidden-first').forEach(element => {
         element.classList.add('hidden-element-first');
@@ -37,6 +56,24 @@ function hideSecond() {
 function hideThird() {
     document.querySelectorAll('.add-hidden-third').forEach(element => {
         element.classList.add('hidden-element-third');
+    });
+}
+
+function hide30() {
+    document.querySelectorAll('.add-hidden-30').forEach(element => {
+        element.classList.add('hidden-element-30');
+    });
+}
+
+function hide45() {
+    document.querySelectorAll('.add-hidden-45').forEach(element => {
+        element.classList.add('hidden-element-45');
+    });
+}
+
+function hide60() {
+    document.querySelectorAll('.add-hidden-60').forEach(element => {
+        element.classList.add('hidden-element-60');
     });
 }
 
@@ -65,6 +102,37 @@ document.addEventListener('DOMContentLoaded', function() {
             optionButtons.forEach(btn => btn.classList.remove('selected'));
             this.classList.add('selected');
             duration = this.id;
+            hideThird();
+            hide30();
+            hide45();
+            hide60();
+
+            const optionButtonsType = document.querySelectorAll('.option-button-type');
+            optionButtonsType.forEach(button => {
+                button.classList.remove('selected');
+            });
+            massageType = null;
+            
+            if (this.id === '30') {
+                reveal30();
+            } else if (this.id === '45') {
+                reveal45();
+            } else if (this.id === '60') {
+                reveal60();
+            }
+
+            moveToBottom();
+        });
+    });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    const optionButtons = document.querySelectorAll('.option-button-type');
+    optionButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            optionButtons.forEach(btn => btn.classList.remove('selected'));
+            this.classList.add('selected');
+            massageType = this.id;
 
             const mainContainer = document.getElementById('reservation-box-container');
             let finishButton = document.querySelector('.finish-reservation-button');
@@ -257,6 +325,13 @@ function pickDate(clickedDateElement = null) {
     revealFirst();
     hideSecond();
     hideThird();
+    hide30();
+    hide45();
+    hide60();
+    const optionButtons = document.querySelectorAll('.option-button-type');
+    optionButtons.forEach(button => {
+        button.classList.remove('selected');
+    });
 
     timeSlotContainer.innerHTML = '';
     selectedDate.style.border = '1px solid black';
@@ -287,7 +362,6 @@ function pickDate(clickedDateElement = null) {
             availableSlots.forEach(slot => {
                 slotsHtml += `
                     <button
-                        style="margin: 5px;"
                         class="big-button time-slot-select"
                         onclick="selectTimeSlot(this)"
                     >
@@ -339,6 +413,11 @@ function selectTimeSlot(button) {
       previouslySelectedButton.classList.remove('selected');
     }
 
+    hideThird();
+    hide30();
+    hide45();
+    hide60();
+
     button.id = 'picked-time-slot';
     button.classList.add('selected');
     timeSlot = button.textContent.trim();
@@ -362,7 +441,9 @@ function selectTimeSlot(button) {
         duration = null;
 
         var heading = document.getElementById('choose-duration-h2');
+        var revealHr = document.getElementById('choose-duration-hr');
         heading.classList.remove('hidden-element-second');
+        revealHr.classList.remove('hidden-element-second');
 
         // Show only available duration options
         var availableDurations = data.available_durations; // This is the array of available durations from the response
@@ -438,6 +519,14 @@ function createReservation() {
         return;
     }
 
+    if (!massageType) {
+        Swal.fire({
+            icon: 'error',
+            title: isEnglish ? `Choose massage type please` : `Vyberte si typ masáže prosím`,
+        });
+        return;
+    }
+
     var dateParts = selectedDate.split('-');
     var formattedDate = `${dateParts[2]}.${dateParts[1]}.${dateParts[0]}`;
 
@@ -462,6 +551,10 @@ function createReservation() {
             <tr>
                 <td>Slot</td>
                 <td>${timeSlot} - ${endTime}</td>
+            </tr>
+            <tr>
+                <td>Typ masáže</td>
+                <td>${massageType}</td>
             </tr>
             <tr>
                 <td>${isEnglish ? 'Name and Surname' : 'Meno a priezvisko'}</td>
@@ -510,6 +603,7 @@ function createReservation() {
                 body: JSON.stringify({
                     selectedDate: selectedDate,
                     duration: duration,
+                    massageType: massageType,
                     timeSlot: timeSlot,
                     nameSurname: nameSurname.value,
                     email: email.value,
@@ -518,8 +612,6 @@ function createReservation() {
                 }),
             }).then((response) => {
                 if (response.ok) {
-                    console.log("User logged in:", isUserLoggedIn);
-                    console.log("User is superuser:", isUserSuperUser);
                     Swal.close();
                     Swal.fire({
                         icon: 'success',
@@ -662,6 +754,17 @@ function updateEvents() {
     hideFirst();
     hideSecond();
     hideThird();
+    hide30();
+    hide45();
+    hide60();
+    duration = null;
+    timeSlot = null;
+    massageType = null;
+
+    const optionButtons = document.querySelectorAll('.option-button-type');
+    optionButtons.forEach(button => {
+        button.classList.remove('selected');
+    });
 
     // Show the loading Swal
     Swal.fire({

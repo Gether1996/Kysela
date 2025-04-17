@@ -8,6 +8,7 @@ function fetchFilteredData(page = 1, sort_by, order, reload) {
         created_at: document.getElementById('sort_created_at').value,
         special_request: document.getElementById('sort_special_request').value,
         status: document.getElementById('sort_status').value,
+        massage_type: document.getElementById('sort_massage_type').value,
         page: page
     };
 
@@ -63,6 +64,7 @@ function updateTable(reservations) {
             <td>${reservation.created_at}</td>
             <td>${reservation.special_request}</td>
             <td>${reservation.status}</td>
+            <td>${reservation.massage_type}</td>
             <td>${reservation.personal_note}</td>
             <td class="text-align-center">${successIcon}</td>
             <td>${reservation.cancellation_reason}</td>
@@ -243,6 +245,7 @@ function filterTable() {
         var created_at = row.children[5].textContent.toLowerCase();                    // Updated: Created At
         var special_request = removeDiacritics(row.children[6].textContent.toLowerCase()); // Updated: Special Request
         var status = removeDiacritics(row.children[7].textContent.toLowerCase());       // Updated: Status
+        var massage_type = removeDiacritics(row.children[8].textContent.toLowerCase()); // Updated: Massage Type
 
         // Determine if the row matches the filter criteria
         var matches = Object.keys(filters).every(key => {
@@ -264,6 +267,8 @@ function filterTable() {
                     return special_request.includes(filterValue);
                 case 'status':
                     return status.includes(filterValue);
+                case 'massage_type':
+                    return massage_type.includes(filterValue);    
                 default:
                     return true;
             }

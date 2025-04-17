@@ -40,6 +40,7 @@ class Reservation(Model):
     status = CharField(max_length=50)
     created_at = DateTimeField()
     updated_at = DateTimeField()
+    massage_type = CharField(max_length=200, default=None, blank=True, null=True)
     special_request = CharField(max_length=200, default=None, null=True, blank=True)
     personal_note = CharField(max_length=200, default=None, null=True, blank=True)
     cancellation_reason = CharField(max_length=254, default=None, blank=True, null=True)

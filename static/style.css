@@ -12,16 +12,30 @@ body {
 }
 
 .under-navbar-text {
-    height: 26px;
+    position: relative;
+    height: 30px;
     display: flex;
-    justify-content: center;
     align-items: center;
-    gap: 10px;
     width: 100%;
     background: linear-gradient(135deg, #4CAF50, #2E7D32);
     font-size: 18px;
     color: white;
 }
+
+.third-position {
+    margin-left: 20%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.two-third-position {
+    margin-left: auto;
+    margin-right: 20%;
+    flex-shrink: 0;
+}
+
 
 .info-buttons-container {
     margin: auto;
@@ -81,7 +95,7 @@ body {
 }
 
 .time-slot-container {
-    margin-top: 30px;
+    margin-top: 10px;
     width: 80%;
     display: flex;
     justify-content: center;
@@ -99,11 +113,21 @@ body {
     gap: 20px;
 }
 
+.type-button-container {
+    margin-top: 0px;
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 18px;
+}
+
 .highlight-cell {
   background-color: #9fdba76b; /* Change this color as needed */
 }
 
-.hidden-element-first, .hidden-element-second, .hidden-element-third {
+.hidden-element-first, .hidden-element-second, .hidden-element-third, .hidden-element-30, .hidden-element-45, .hidden-element-60 {
     display: none;
 }
 
@@ -395,7 +419,7 @@ body {
 }
 
 .price-table {
-    width: 26%;
+    width: 45%;
     height: 450px;
     border-collapse: collapse;
     font-family: 'Arial', sans-serif;
@@ -485,6 +509,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 90%;
 }
 
 #spolupraca h3 {
@@ -739,7 +764,7 @@ body {
     border-color: #3fbb46;
 }
 
-.option-button-person, .option-button-time, .time-slot-select, .user-select {
+.option-button-person, .option-button-time, .option-button-type, .time-slot-select, .user-select {
     padding: 10px 20px;
     border: 2px solid #ddd;
     border-radius: 5px;
@@ -749,14 +774,14 @@ body {
 }
 
 /* Hover effect */
-.option-button-person:hover, .option-button-time:hover, .finish-reservation-button:hover, .time-slot-select:hover, .user-select:hover {
+.option-button-person:hover, .option-button-time:hover, .option-button-type:hover, .finish-reservation-button:hover, .time-slot-select:hover, .user-select:hover {
     background-color: #e0e0e0; /* Slightly darker background on hover */
     border-color: #ccc; /* Change border color on hover */
     transform: scale(1.05); /* Slight scale up on hover */
 }
 
 /* Style for selected buttons */
-.option-button-person.selected, .option-button-time.selected {
+.option-button-person.selected, .option-button-time.selected, .option-button-type.selected {
     background-color: #3fbb46; /* Change background color when selected */
     color: white; /* Change text color when selected */
     border-color: #3fbb46;; /* Change border color when selected */
@@ -799,9 +824,20 @@ body {
     scale: 1.2;
 }
 
+.small-button {
+    padding: 8px 10px;
+    font-size: 17px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: center;
+    width: auto;
+    white-space: nowrap;
+}
+
 .big-button {
     padding: 20px;
-    margin: 10px 0;
+    margin: 5px;
     font-size: 24px;
     border: 2px solid #ccc;
     border-radius: 20px;

@@ -150,6 +150,7 @@ def profile(request):
                 'date': reservation.get_date_string(),
                 'time': reservation.get_time_range_string(),
                 'status': reservation.status,
+                'massage_type': reservation.massage_type if reservation.massage_type else "",
                 'special_request': reservation.special_request,
                 'cancellation_reason': reservation.cancellation_reason if reservation.cancellation_reason else "",
                 'created_at': reservation.get_created_at_string(),
@@ -203,6 +204,7 @@ def get_all_reservations_data(request):
         'phone_number': request.GET.get('phone_number', ''),
         'date': request.GET.get('date', ''),
         'slot': request.GET.get('slot', ''),
+        'massage_type': request.GET.get('massage_type', ''),
         'created_at': request.GET.get('created_at', ''),
         'special_request': request.GET.get('special_request', ''),
         'status': request.GET.get('status', ''),
@@ -228,6 +230,9 @@ def get_all_reservations_data(request):
 
     if filters['status']:
         all_reservations_obj = all_reservations_obj.filter(status__icontains=filters['status'])
+
+    if filters['massage_type']:
+        all_reservations_obj = all_reservations_obj.filter(massage_type__icontains=filters['massage_type'])
 
     if filters['created_at']:
         all_reservations_obj_filtered = [

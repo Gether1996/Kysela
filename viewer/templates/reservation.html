@@ -107,7 +107,9 @@
 
     <div class="column-container">
         <h1>{% trans 'Rezervácia' %}</h1>
-        <p style="margin-top: 0px;">Online sa môžete rezervovať minimálne 2 dni vopred, pre skorší termín (dnes / zajtra) kontaktujte +421 903 773 400</p>
+        <p style="margin-top: 0px;">Online rezervácia aspoň 2 dni vopred, skorší termín (dnes / zajtra) telefonicky.</p>
+        <p style="margin-top: 0px;">Masáže 90 alebo 120 minútové len telefonicky.</p>
+        <p style="margin-top: 0px; font-size: 18px; font-weight: bold;">+421 903 773 400</p>
 
         <div class="reservation-box-container">
             <div id="reservation-box-container" class="column-container">
@@ -119,15 +121,42 @@
                 <h2 style="text-align: center;" class="hidden-element-first add-hidden-first">{% trans 'Vyberte začiatok masáže' %}:</h2>
                 <div id="time-slot-container" class="hidden-element-first add-hidden-first time-slot-container"></div>
 
-                <hr class="hidden-element-second add-hidden-second hr-basic-style">
-
-                <h2 class="hidden-element-second add-hidden-second" id="choose-duration-h2">{% trans 'Vyberte dĺžku masáže' %}:</h2>
-                <div class="row-container duration-container" id="duration-container">
+                <hr class="hidden-element-second add-hidden-second hr-basic-style" id="choose-duration-hr">
+                <h2 style="margin-top: 2px;" class="hidden-element-second add-hidden-second" id="choose-duration-h2">{% trans 'Vyberte dĺžku masáže' %}:</h2>
+                <div class="hidden-element-second add-hidden-second row-container duration-container">
                     <div class="hidden-element-second add-hidden-second big-button option-button-time" id="30">30 min</div>
                     <div class="hidden-element-second add-hidden-second big-button option-button-time" id="45">45 min</div>
                     <div class="hidden-element-second add-hidden-second big-button option-button-time" id="60">60 min</div>
-                    <div class="hidden-element-second add-hidden-second big-button option-button-time" id="90">90 min</div>
-                    <div class="hidden-element-second add-hidden-second big-button option-button-time" id="120">120 min</div>
+                </div>
+
+                <hr class="hidden-element-30 add-hidden-30 hr-basic-style">
+                <h2 style="margin-top: 2px;" class="hidden-element-30 add-hidden-30">{% trans 'Vyberte typ masáže' %}:</h2>
+                <div class="hidden-element-30 add-hidden-30 type-button-container">
+                    <div class="hidden-element-30 add-hidden-30 small-button option-button-type" id="Chrbát">Chrbát</div>
+                    <div class="hidden-element-30 add-hidden-30 small-button option-button-type" id="Horné končatiny + šija">Horné končatiny + šija</div>
+                </div>
+
+                <hr class="hidden-element-45 add-hidden-45 hr-basic-style">
+                <h2 style="margin-top: 2px;" class="hidden-element-45 add-hidden-45">{% trans 'Vyberte typ masáže' %}:</h2>
+                <div class="hidden-element-45 add-hidden-45 type-button-container">
+                    <div class="hidden-element-45 add-hidden-45 small-button option-button-type" id="Chrbát + šija">Chrbát + šija</div>
+                    <div class="hidden-element-45 add-hidden-45 small-button option-button-type" id="Dolné končatiny">Dolné končatiny</div>
+                    <div class="hidden-element-45 add-hidden-45 small-button option-button-type" id="Horné končatiny + šija">Horné končatiny + šija</div>
+                    <div class="hidden-element-45 add-hidden-45 small-button option-button-type" id="Chrbát + šija + bankovanie">Chrbát + šija + bankovanie</div>
+                    <div class="hidden-element-45 add-hidden-45 small-button option-button-type" id="Chrbát + šija + lávové kamene">Chrbát + šija + lávové kamene</div>
+                </div>
+
+                <hr class="hidden-element-60 add-hidden-60 hr-basic-style">
+                <h2 style="margin-top: 2px;" class="hidden-element-60 add-hidden-60">{% trans 'Vyberte typ masáže' %}:</h2>
+                <div class="hidden-element-60 add-hidden-60 type-button-container">
+                    <div class="hidden-element-60 add-hidden-60 small-button option-button-type" id="Chrbát + šija">Chrbát + šija</div>
+                    <div class="hidden-element-60 add-hidden-60 small-button option-button-type" id="Horné končatiny">Horné končatiny</div>
+                    <div class="hidden-element-60 add-hidden-60 small-button option-button-type" id="Horné končatiny + šija + bankovanie">Horné končatiny + šija + bankovanie</div>
+                    <div class="hidden-element-60 add-hidden-60 small-button option-button-type" id="Horné končatiny + šija + lávové kamene">Horné končatiny + šija + lávové kamene</div>
+                    <div class="hidden-element-60 add-hidden-60 small-button option-button-type" id="Horné a dolné končatiny">Horné a dolné končatiny</div>
+                    <div class="hidden-element-60 add-hidden-60 small-button option-button-type" id="Chrbát + šija + bankovanie">Chrbát + šija + bankovanie</div>
+                    <div class="hidden-element-60 add-hidden-60 small-button option-button-type" id="Chrbát + šija + lávové kamene">Chrbát + šija + lávové kamene</div>
+                    <div class="hidden-element-60 add-hidden-60 small-button option-button-type" id="Fuss (tlaková masáž chodidiel)">Fuss (tlaková masáž chodidiel)</div>
                 </div>
 
                 <hr class="hidden-element-third add-hidden-third hr-basic-style">

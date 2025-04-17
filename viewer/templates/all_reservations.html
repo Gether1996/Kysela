@@ -52,6 +52,9 @@
                     <th class="text-align-left" style="width: 7%;"><a class="ordering-link" href="{% url 'all_reservations' %}?sort_by=status&order={% if current_sort_by == 'status' and current_order == 'asc' %}desc{% else %}asc{% endif %}{% if page %}&page={{ page }}{% endif %}">
                         Status {% if current_sort_by == 'status' %} {% if current_order == 'asc' %}&#9650;{% else %}&#9660;{% endif %}{% endif %}
                     </a></th>
+                    <th class="text-align-left" style="width: 7%;"><a class="ordering-link" href="{% url 'all_reservations' %}?sort_by=massage_type&order={% if current_sort_by == 'massage_type' and current_order == 'asc' %}desc{% else %}asc{% endif %}{% if page %}&page={{ page }}{% endif %}">
+                        Typ {% if current_sort_by == 'massage_type' %} {% if current_order == 'asc' %}&#9650;{% else %}&#9660;{% endif %}{% endif %}
+                    </a></th>
                     <th class="text-align-left">Môj popis</th>
                     <th class="text-align-center" style="width: 5%;"><a class="ordering-link" href="{% url 'all_reservations' %}?sort_by=active&order={% if current_sort_by == 'active' and current_order == 'asc' %}desc{% else %}asc{% endif %}{% if page %}&page={{ page }}{% endif %}">
                         Aktívna {% if current_sort_by == 'active' %} {% if current_order == 'asc' %}&#9650;{% else %}&#9660;{% endif %}{% endif %}
@@ -68,6 +71,7 @@
                     <th><input class="searching-input-table" data-filter="created_at" type="text" id="sort_created_at"></th>
                     <th><input class="searching-input-table" data-filter="special_request" type="text" id="sort_special_request"></th>
                     <th><input class="searching-input-table" data-filter="status" type="text" id="sort_status"></th>
+                    <th><input class="searching-input-table" data-filter="massage_type" type="text" id="sort_massage_type"></th>
                     <th></th>
                     <th></th>
                     <th></th>

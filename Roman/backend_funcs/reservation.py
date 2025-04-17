@@ -31,6 +31,7 @@ def prepare_reservation_data(reservation):
         'active': reservation.active,
         'status': reservation.status,
         'created_at': reservation.get_created_at_string(),
+        'massage_type': reservation.massage_type if reservation.massage_type else "",
         'special_request': reservation.special_request if reservation.special_request else '',
         'personal_note': reservation.personal_note if reservation.personal_note else '',
         'cancellation_reason': reservation.cancellation_reason if reservation.cancellation_reason else '',
@@ -72,6 +73,7 @@ def create_reservation(request):
             personal_note=json_data.get('note') if note == 'admin' else '',
             datetime_from=datetime_from_obj,
             datetime_to=date_time_to_obj,
+            massage_type = json_data.get('massageType') if json_data.get('massageType') else "",
             created_at=datetime.now(),
             updated_at=datetime.now(),
         )
@@ -213,7 +215,7 @@ def check_available_durations(request):
         reservations = Reservation.objects.filter(datetime_from__date=selected_date, active=True)
 
         # Define possible duration windows in minutes
-        duration_options = [30, 45, 60, 90, 120]
+        duration_options = [30, 45, 60]
         available_durations = []
 
         for duration in duration_options:
