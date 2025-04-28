@@ -150,6 +150,14 @@ def check_available_slots(request):
             slot_start = current_time.time()
             slot_end = next_time.time()
 
+            # Check if the slot is in the last available hour
+            in_last_hour = current_time.hour == last_possible_start.hour
+
+            # If we're in the last available hour, only allow slots at :00
+            if in_last_hour and current_time.minute != 0:
+                current_time = next_time
+                continue
+
             # Check if the slot overlaps with any turned-off time or reservations
             is_available = True
 
@@ -158,17 +166,13 @@ def check_available_slots(request):
                 turned_off_start = turned_off_day.time_from
                 turned_off_end = turned_off_day.time_to
                 
-                # If the turned-off day covers the whole day, mark as unavailable
                 if turned_off_day.whole_day:
                     is_available = False
                     break
 
-                # If the turned-off period is specified, exclude overlapping slots
                 if turned_off_start and turned_off_end:
-                    # Calculate slot end time considering the 30-minute duration
                     slot_end = (datetime.combine(selected_date, slot_start) + timedelta(minutes=30)).time()
 
-                    # Check if any part of the slot overlaps with the turned-off period
                     if not (slot_end <= turned_off_start or slot_start >= turned_off_end):
                         is_available = False
                         break
@@ -176,10 +180,8 @@ def check_available_slots(request):
             # Check against reservations
             for reservation in reservations:
                 reservation_start_time = (reservation.datetime_from - timedelta(minutes=15)).time()
-                # Adding 15-minute break after each reservation
                 reservation_end_time = (reservation.datetime_to + timedelta(minutes=15)).time()
 
-                # Check if the entire 30-minute duration is available
                 if (slot_start < reservation_end_time and
                         (datetime.combine(selected_date, slot_start) + timedelta(
                             minutes=30)).time() > reservation_start_time):
@@ -367,7 +369,7 @@ def approve_reservation(request):
             reservation.status = 'Schválená'
             reservation.save()
             if reservation.email:
-                subject = f'Rezervácia potvrdená / Reservation accepted'
+                subject = f'Rezervácia potvrdená'
                 html_message = render_to_string('email_template.html',
                                                 {'reservation': prepare_reservation_data(reservation),
                                                  'button': None,

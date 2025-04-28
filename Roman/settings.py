@@ -5,15 +5,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-sx5t9b&tpm9y0r+8(er1459^l2#tkplzq%2&#bu2wt_g-kuk7!'
 
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1', 'mail.314.sk']
 
-DOMAINS = ['https://masazevlcince.sk']
+DOMAINS = ['https://pkrelaxfit.sk']
 
 CSRF_TRUSTED_ORIGINS = DOMAINS
 
-MAIN_EMAIL = 'gether1996@gmail.com'
+MAIN_EMAIL = 'kyspa@kyspa.sk'
 
 LOGIN_URL = '/admin/login/'
 
@@ -131,5 +131,5 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'mail.314.sk'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'masazevlcince@masazevlcince.sk'
-EMAIL_HOST_PASSWORD = 'E@FPAkmvhVqd4'
+EMAIL_HOST_USER = 'objednavky@pkrelaxfit.sk'
+EMAIL_HOST_PASSWORD = 'dSByF7Gsf@7Cy'
