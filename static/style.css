@@ -1576,6 +1576,10 @@ body {
         border-bottom: 2px solid #3fbb46;
     }
 
+    .payment-in-cash, .vernostny-program-text { 
+        font-size: 20px; 
+    }
+
     .table-container-profile {
         width: 88%;
         max-width: 90%;
