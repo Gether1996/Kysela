@@ -7,9 +7,9 @@ SECRET_KEY = 'django-insecure-sx5t9b&tpm9y0r+8(er1459^l2#tkplzq%2&#bu2wt_g-kuk7!
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', 'mail.314.sk']
+ALLOWED_HOSTS = ['127.0.0.1', 'mail.314.sk', '*']
 
-DOMAINS = ['https://pkrelaxfit.sk']
+DOMAINS = ['https://pkrelaxfit.sk', 'https://www.pkrelaxfit.sk']
 
 CSRF_TRUSTED_ORIGINS = DOMAINS
 
