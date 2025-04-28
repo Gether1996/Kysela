@@ -9,7 +9,7 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['127.0.0.1', 'mail.314.sk', '*']
 
-DOMAINS = ['https://pkrelaxfit.sk', 'https://www.pkrelaxfit.sk']
+DOMAINS = ['https://pkrelaxfit.sk', 'https://www.pkrelaxfit.sk', 'http://pkrelaxfit.sk']
 
 CSRF_TRUSTED_ORIGINS = DOMAINS
 

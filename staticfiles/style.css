@@ -308,6 +308,7 @@ body {
 .social-icons {
   display: flex;
   align-items: center;
+  width: 100px;
 }
 
 .social-icons a {
@@ -1310,9 +1311,6 @@ body {
       width: 100%;
       height: 120px;
       background: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
     }
 
     .navbar-content {
@@ -1375,6 +1373,10 @@ body {
         margin: 0px;
         padding: 2px;
     }
+
+    .nav-contact {
+        width: 30%;
+      }
 
     .name-surname {
         font-size: 16px;
