@@ -485,7 +485,7 @@ body {
 }
 
 .person-container img {
-    border-radius: 50%;
+    border-radius: 10%;
     margin-bottom: 20px;
 }
 
@@ -525,7 +525,7 @@ body {
 }
 
 .roman-image {
-    width: 35%;
+    width: 28%;
 }
 
 #gallery, #technique {
@@ -1389,7 +1389,7 @@ body {
       }
 
     .name-surname {
-        font-size: 16px;
+        font-size: 22px;
         display: flex;
         align-items: center;
     }
@@ -1446,7 +1446,7 @@ body {
     }
 
     .roman-image {
-        width: 80%;
+        width: 60%;
     }
 
     .gallery-container {
@@ -1752,7 +1752,7 @@ body {
         background-color: white;
         margin: auto;
         border-radius: 20px;
-        margin-top: 20px;
+        margin-top: 5px;
         margin-bottom: 50px;
     }
 
