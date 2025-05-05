@@ -525,7 +525,7 @@ body {
 }
 
 .roman-image {
-    width: 28%;
+    width: 25%;
 }
 
 #gallery, #technique {
@@ -551,7 +551,7 @@ body {
 
 .gallery-container img {
     width: calc(32% - 50px);
-    height: 500px;
+    height: 550px;
     margin: 15px;
     box-sizing: border-box;
     border-radius: 10%;
@@ -660,6 +660,7 @@ body {
     margin: auto;
     background-color: #fff;
     border-radius: 8px;
+    overflow-x: auto;
     padding: 20px;
 }
 
@@ -1460,7 +1461,7 @@ body {
 
     .gallery-container img {
         width: 40%; /* Adjust width to fit two images in a row */
-        height: 130px;
+        height: 200px;
         margin: 15px;
         box-sizing: border-box;
         border-radius: 10%;
@@ -1794,13 +1795,6 @@ body {
 @media screen and (max-width: 800px) {
     .gallery-container img,
     .voucher-download-container img {
-        height: 250px;
-    }
-}
-
-@media screen and (max-width: 600px) {
-    .gallery-container img,
-    .voucher-download-container img {
-        height: 150px;
+        height: 200px;
     }
 }

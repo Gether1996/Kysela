@@ -10,10 +10,12 @@ DEBUG = False
 ALLOWED_HOSTS = ['127.0.0.1', 'mail.314.sk', '*']
 
 DOMAINS = ['https://pkrelaxfit.sk', 'https://www.pkrelaxfit.sk', 'http://pkrelaxfit.sk']
+CURRENT_DOMAIN = 'https://pkrelaxfit.sk'
 
 CSRF_TRUSTED_ORIGINS = DOMAINS
 
-MAIN_EMAIL = 'kyspa@kyspa.sk'
+# MAIN_EMAIL = 'kyspa@kyspa.sk'
+MAIN_EMAIL = 'gether1996@gmail.com'
 
 LOGIN_URL = '/admin/login/'
 

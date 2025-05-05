@@ -50,14 +50,14 @@ function updateTable(reservations) {
             '<i style="color: red;" class="fa-solid fa-circle-xmark"></i>';
 
         var actionButton = reservation.active ?
-            `<button class="action-button" style='background-color: #dd3c3c; margin-bottom: 3px;' onclick="deactivateReservation('${reservation.id}', '${reservation.name_surname}')">Deaktivovať</button>` :
-            `<button class="action-button" style='background-color: #4caf50; margin-bottom: 3px;' onclick="approveReservation('${reservation.id}', '${reservation.name_surname}')">Schváliť</button>`;
+            `<button class="action-button" style='background-color: #dd3c3c; margin: 2px;' onclick="deactivateReservation('${reservation.id}', '${reservation.name_surname}')">Deaktivovať</button>` :
+            `<button class="action-button" style='background-color: #4caf50; margin: 2px;' onclick="approveReservation('${reservation.id}', '${reservation.name_surname}')">Schváliť</button>`;
 
         var row = document.createElement('tr');
         row.className = 'files-row';
         row.innerHTML = `
-            <td>${reservation.date}</td>
-            <td>${reservation.slot}</td>
+            <td width="100">${reservation.date}</td>
+            <td style="white-space:nowrap;">${reservation.slot}</td>
             <td>${reservation.name_surname}</td>
             <td>${reservation.email}</td>
             <td>${reservation.phone_number}</td>
@@ -68,10 +68,10 @@ function updateTable(reservations) {
             <td>${reservation.personal_note}</td>
             <td class="text-align-center">${successIcon}</td>
             <td>${reservation.cancellation_reason}</td>
-            <td class="text-align-center">
+            <td style="display: flex; justify-content: center; align-items: center;">
                 ${actionButton}
-                <button title="Poznámka" class="action-button" style='background-color: #4caf50; margin-left: 2px;' onclick="addNote('${reservation.id}', '${reservation.name_surname}', '${reservation.personal_note}')"><i class="fa-solid fa-pen-to-square"></i></button>
-                <button title="Vymazať" class="action-button" style='background-color: #dd3c3c; margin-left: 2px;' onclick="deleteReservation('${reservation.id}', '${reservation.name_surname}')"><i class="fa-solid fa-trash"></i></button>
+                <button title="Poznámka" class="action-button" style='background-color: #4caf50; margin: 2px;' onclick="addNote('${reservation.id}', '${reservation.name_surname}', '${reservation.personal_note}')"><i class="fa-solid fa-pen-to-square"></i></button>
+                <button title="Vymazať" class="action-button" style='background-color: #dd3c3c; margin: 2px;' onclick="deleteReservation('${reservation.id}', '${reservation.name_surname}')"><i class="fa-solid fa-trash"></i></button>
             </td>
         `;
         tbody.appendChild(row);

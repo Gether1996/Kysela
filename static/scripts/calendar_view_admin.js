@@ -23,8 +23,8 @@ document.addEventListener('DOMContentLoaded', function() {
             right: 'timeGridDay,timeGridWeek,dayGridMonth',
         },
         slotDuration: '01:00:00',
-        slotMinTime: '07:00',
-        slotMaxTime: '22:00',
+        slotMinTime: '14:00',
+        slotMaxTime: '21:00',
         allDaySlot: false,
         expandRows: true,
         eventTimeFormat: {

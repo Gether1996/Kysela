@@ -88,18 +88,16 @@ def create_reservation(request):
             )
 
         if note == 'user':
-            current_scheme = request.scheme  # 'http' or 'https'
-            current_domain = request.get_host()
+            current_domain = getattr(settings, 'CURRENT_DOMAIN')
             subject = f'Nová rezervácia'
-            accept_link = f'{current_scheme}://{current_domain}/approve_reservation_mail/{new_reservation.id}/'
-            all_reservations_link = f'{current_scheme}://{current_domain}/all_reservations/'
-            text = f'Nová rezervácia'
+            accept_link = f'{current_domain}/approve_reservation_mail/{new_reservation.id}/'
+            all_reservations_link = f'{current_domain}/all_reservations/'
             html_message = render_to_string('email_template.html',
                                             {'reservation': prepare_reservation_data(new_reservation),
                                              'button': True,
                                              'accept_link': accept_link,
                                              'all_reservations_link': all_reservations_link,
-                                             'text': text,
+                                             'text': subject,
                                              })
             send_email(subject, html_message, getattr(settings, 'MAIN_EMAIL'))
 
@@ -150,14 +148,6 @@ def check_available_slots(request):
             slot_start = current_time.time()
             slot_end = next_time.time()
 
-            # Check if the slot is in the last available hour
-            in_last_hour = current_time.hour == last_possible_start.hour
-
-            # If we're in the last available hour, only allow slots at :00
-            if in_last_hour and current_time.minute != 0:
-                current_time = next_time
-                continue
-
             # Check if the slot overlaps with any turned-off time or reservations
             is_available = True
 
@@ -189,7 +179,8 @@ def check_available_slots(request):
                     break
 
             if is_available:
-                available_slots.append(f"{slot_start.strftime('%H:%M')}")
+                if slot_start.minute == 0:
+                    available_slots.append(f"{slot_start.strftime('%H:%M')}")
 
             current_time = next_time
         return JsonResponse({'status': 'success', 'available_slots': available_slots})
@@ -226,6 +217,12 @@ def check_available_durations(request):
             # Check if the window is within working hours
             if not (starting_hour <= time_slot_start <= ending_hour and starting_hour <= end_time <= ending_hour):
                 continue
+
+            # Special rule: allow 60 min only if this is the last possible slot
+            if duration == 60:
+                latest_start_for_60min = (datetime.combine(selected_date, ending_hour) - timedelta(minutes=60)).time()
+                if time_slot_start != latest_start_for_60min:
+                    continue
 
             # Check if this duration overlaps with any turned-off times
             overlaps = False
@@ -268,7 +265,7 @@ def check_available_slots_ahead(request):
             days_to_check_ahead = int(worker_config['days_ahead'])
         working_days = worker_config['working_days']
         end_date = today + timedelta(days=days_to_check_ahead)
-        slot_duration = 30  # Assuming 30 minutes per slot
+        slot_duration = 60
 
         events = []
 

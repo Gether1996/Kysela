@@ -297,7 +297,7 @@ def approve_reservation_mail(request, reservation_id):
                 reserv.status = 'Schválená'
                 reserv.save()
 
-                subject = f'Rezervácia potvrdená / Reservation accepted'
+                subject = f'Rezervácia potvrdená'
                 html_message = render_to_string('email_template.html',
                                                 {'reservation': prepare_reservation_data(reserv),
                                                  'button': None,
