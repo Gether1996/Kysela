@@ -14,8 +14,8 @@ CURRENT_DOMAIN = 'https://pkrelaxfit.sk'
 
 CSRF_TRUSTED_ORIGINS = DOMAINS
 
-# MAIN_EMAIL = 'kyspa@kyspa.sk'
-MAIN_EMAIL = 'gether1996@gmail.com'
+MAIN_EMAIL = 'kyspa@kyspa.sk'
+# MAIN_EMAIL = 'gether1996@gmail.com'
 
 LOGIN_URL = '/admin/login/'
 
