@@ -285,11 +285,12 @@ body {
   color: black;
   font-size: 18px;
   transition: 0.2s;
+  will-change: transform;
   display: flex;
 }
 
 .navbar-button:hover {
-  transform: scale(1.2);
+    transform: scale(1.2);
 }
 
 /* Style the social icons and phone info on the right side */
@@ -300,6 +301,7 @@ body {
 
 .navbar-icon {
     transition: 0.3s;
+    will-change: transform;
     text-decoration: none;
     color: black;
     margin: 5px;
@@ -308,7 +310,7 @@ body {
 }
 
 .navbar-icon:hover {
-    scale: 1.3;
+    transform: scale(1.3);
 }
 
 .social-icons {

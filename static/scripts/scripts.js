@@ -1,6 +1,7 @@
 var Swal = Swal.mixin({
   confirmButtonColor: '#3fbb46',
   cancelButtonText: isEnglish ? 'Cancel' : 'Zrušiť',
+  scrollbarPadding: false
 });
 
 function switchLanguage(language_code) {
