@@ -55,15 +55,14 @@
        </div>
     </section>
 
-    <br>
-    <br>
-
     <section id="technique">
         <h1>Cenník / Techniky</h1>
 
         <div class="technique-container-main">
             <div style="text-align: center; margin-top: 15px;">
                 <p class="vernostny-program-text">Vernostný program - každá jedenásta 45.min masáž GRATIS!</p>
+                <br>
+                <p class="vernostny-program-text">Možnosť zakúpenia darčekovej poukážky <i onclick="openGiftCard()" class="fa-solid fa-gift-card navbar-icon" title="Ďarčeková poukážka"></i></p>
                 <br>
                 <p class="payment-in-cash" style="color: #ff6363;">! Platba možná len v hotovosti !</p>
             </div>
@@ -85,26 +84,6 @@
                     <tr><td></td><td style="text-align: right; white-space: nowrap;">Cenník platný od 01.01.2025</td></tr>
                 </table>
 
-                {% comment %}
-                <table class="price-table">
-                        <tr class="category">
-                            <td>Druh poskytovaných masáží</td>
-                            <td style="text-align: right;">Čas</td>
-                        </tr>
-                        <tr><td>Chrbát: klasik</td><td class="highlight">30 min</td></tr>
-                        <tr><td>Chrbát: čínska tlaková</td><td class="highlight">5 min</td></tr>
-                        <tr><td>Šija: klasik</td><td class="highlight">10 min</td></tr>
-                        <tr><td>Šija: čínska tlaková</td><td class="highlight">5 min</td></tr>
-                        <tr><td>Dolné končatiny: klasik</td><td class="highlight">45 min</td></tr>
-                        <tr><td>Horné končatiny: klasik</td><td class="highlight">15 min</td></tr>
-                        <tr><td>Brucho: klasik</td><td class="highlight">10 min</td></tr>
-                        <tr><td>Brucho: čínska tlaková</td><td class="highlight">5 min</td></tr>
-                        <tr><td>Tvár: relaxačná</td><td class="highlight">10 min</td></tr>
-                        <tr><td>Hrudník: klasik</td><td class="highlight">8 min</td></tr>
-                        <tr><td>Fuss: Reflexná masáž chodidiel</td><td class="highlight">60 min</td></tr>
-                </table>
-                {% endcomment %}
-
                 <table class="price-table">
                         <tr class="category">
                             <td>Odporúčané kombinácie masáží</td>
@@ -114,13 +93,13 @@
                         <tr><td>Horné končatiny + šija</td><td class="highlight">30 min</td></tr>
                         
                         <!-- 45 min -->
-                        <tr><td>Chrbát + šija, horné končatiny</td><td class="highlight">45 min</td></tr>
-                        <tr><td>Dolné končatiny + šija</td><td class="highlight">45 min</td></tr>
+                        <tr><td>Chrbát + šija + horné končatiny</td><td class="highlight">45 min</td></tr>
+                        <tr><td>Dolné končatiny</td><td class="highlight">45 min</td></tr>
                         <tr><td>Chrbát + šija + bankovanie</td><td class="highlight">45 min</td></tr>
                         <tr><td>Chrbát + šija + lávové kamene</td><td class="highlight">45 min</td></tr>
                         
                         <!-- 60 min -->
-                        <tr><td>Chrbát + šija, horné končatiny</td><td class="highlight">60 min</td></tr>
+                        <tr><td>Chrbát + šija + horné končatiny</td><td class="highlight">60 min</td></tr>
                         <tr><td>Horné končatiny + šija + bankovanie</td><td class="highlight">60 min</td></tr>
                         <tr><td>Horné končatiny + šija + lávové kamene</td><td class="highlight">60 min</td></tr>
                         <tr><td>Horné a dolné končatiny</td><td class="highlight">60 min</td></tr>
@@ -158,7 +137,7 @@
             </div>
     </section>
 
-    <section id="poukazka" style="margin-bottom: 100px;">
+    <section id="poukazka" style="margin-bottom: 50px;">
         <div class="gallery-container-poukazka">
             {% for voucher in vouchers %}
                 <div class="voucher-download-container">

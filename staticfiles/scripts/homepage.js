@@ -94,19 +94,19 @@ function openSwal(id) {
                     </p>
                     <p>
                         Existujú rôzne techniky klasickej masáže:
-                        <ul style="margin-left: -20px;">
-                            <li><strong>Hladenie:</strong> Jemné pohyby na zahriatie a uvoľnenie pokožky.</li>
-                            <li><strong>Hnetenie:</strong> Hlbšie pôsobenie na svaly na odstránenie napätia.</li>
-                            <li><strong>Rázne údery:</strong> Rytmické poklepy na stimuláciu krvného obehu.</li>
-                            <li><strong>Vibrovanie:</strong> Jemné trasenie pre uvoľnenie a relaxáciu.</li>
-                        </ul>
                     </p>
+                    <ul style="margin-left: -20px;">
+                        <li><strong>Hladenie:</strong> Jemné pohyby na zahriatie a uvoľnenie pokožky.</li>
+                        <li><strong>Hnetenie:</strong> Hlbšie pôsobenie na svaly, ktoré odstraňuje napätie.</li>
+                        <li><strong>Rázne údery:</strong> Rytmické poklepy na stimuláciu krvného obehu.</li>
+                        <li><strong>Vibrovanie:</strong> Jemné trasenie na uvoľnenie a relaxáciu.</li>
+                    </ul>
                     <p>
                         Klasická masáž je vhodná na liečbu bolestí chrbta, stresu, svalovej stuhnutosti
-                        a celkovú regeneráciu organizmu.
+                        a na celkovú regeneráciu organizmu.
                     </p>
                 </div>
-            `,
+            `        
         },
         2: {
             title: '<h2 style="color: #459b4a;">Športová masáž</h2>',
@@ -117,24 +117,24 @@ function openSwal(id) {
                         <strong>zlepšenie svalovej regenerácie</strong>, prevenciu zranení a
                         zvýšenie fyzického výkonu. Táto masáž pomáha športovcom aj aktívnym
                         jednotlivcom uvoľniť svalové napätie, zlepšiť krvný obeh a
-                        optimalizovať pohybový aparát.
+                        optimalizovať funkciu pohybového aparátu.
                     </p>
                     <p>
                         Medzi hlavné techniky športovej masáže patria:
-                        <ul style="margin-left: -20px;">
-                            <li><strong>Hĺbková masáž:</strong> Intenzívne hnetenie a tlak na hlbšie vrstvy svalov.</li>
-                            <li><strong>Trenie:</strong> Krátke a rázne pohyby na stimuláciu cirkulácie.</li>
-                            <li><strong>Stretching:</strong> Kombinácia masáže a natiahnutia svalov pre flexibilitu.</li>
-                            <li><strong>Percusné techniky:</strong> Rýchle údery na aktiváciu svalov pred výkonom.</li>
-                        </ul>
                     </p>
+                    <ul style="margin-left: -20px;">
+                        <li><strong>Hĺbková masáž:</strong> Intenzívne hnetenie a tlak na hlbšie vrstvy svalov.</li>
+                        <li><strong>Trenie:</strong> Krátke a rázne pohyby na stimuláciu cirkulácie.</li>
+                        <li><strong>Stretching:</strong> Kombinácia masáže a natiahnutia svalov na zlepšenie flexibility.</li>
+                        <li><strong>Percusné techniky:</strong> Rýchle údery na aktiváciu svalov pred výkonom.</li>
+                    </ul>
                     <p>
                         Športová masáž je vhodná nielen pre profesionálnych športovcov, ale aj
                         pre všetkých, ktorí sa venujú fyzickej aktivite a chcú predchádzať
-                        svalovým zraneniam, zlepšiť regeneráciu a zvýšiť celkovú pohyblivosť.
+                        svalovým zraneniam, podporiť regeneráciu a zvýšiť celkovú pohyblivosť.
                     </p>
                 </div>
-            `,
+            `        
         },
         3: {
             title: '<h2 style="color: #459b4a;">Relaxačná masáž</h2>',
@@ -161,7 +161,7 @@ function openSwal(id) {
                         prináša pocit celkového blaha.
                     </p>
                 </div>
-            `,
+            `
         },
         4: {
             title: '<h2 style="color: #459b4a;">Mäkké techniky</h2>',
@@ -174,24 +174,24 @@ function openSwal(id) {
                         zlepšenie flexibility a podporu prirodzenej regenerácie organizmu.
                     </p>
                     <p>
-                        Medzi najbežnejšie mäkké techniky patrí:
-                        <ul style="margin-left: -20px;">
-                            <li><strong>Myofasciálna uvoľňovacia technika:</strong> Zameriava sa na uvoľnenie napätia v
-                            svaloch a fasciách prostredníctvom jemného tlaku a pohybov.</li>
-                            <li><strong>Mobilizácie:</strong> Pomocou pomalých, kontrolovaných pohybov sa uvoľňujú kĺby a
-                            zlepšuje ich pohyblivosť.</li>
-                            <li><strong>Trigger point terapia:</strong> Zameriava sa na odstraňovanie bolestivých
-                            bodov vo svaloch a fasciach.</li>
-                            <li><strong>Technika postizometrickej relaxácie (PIR):</strong> Kombinácia napínania a
-                            uvoľňovania svalov s cieľom obnoviť ich pružnosť a elasticitu.</li>
-                        </ul>
+                        Medzi najbežnejšie mäkké techniky patria:
                     </p>
+                    <ul style="margin-left: -20px;">
+                        <li><strong>Myofasciálna uvoľňovacia technika:</strong> Zameriava sa na uvoľnenie napätia v
+                        svaloch a fasciách prostredníctvom jemného tlaku a pohybov.</li>
+                        <li><strong>Mobilizácie:</strong> Pomocou pomalých, kontrolovaných pohybov sa uvoľňujú kĺby a
+                        zlepšuje ich pohyblivosť.</li>
+                        <li><strong>Trigger point terapia:</strong> Zameriava sa na odstraňovanie bolestivých
+                        bodov vo svaloch a fasciách.</li>
+                        <li><strong>Technika postizometrickej relaxácie (PIR):</strong> Kombinácia napínania a
+                        uvoľňovania svalov s cieľom obnoviť ich pružnosť a elasticitu.</li>
+                    </ul>
                     <p>
                         Mäkké techniky sa často používajú na liečbu svalových a kĺbových
-                        bolestí, chronických zápalov, a na celkovú relaxáciu tela a mysle.
+                        bolestí, chronických zápalov a na celkovú relaxáciu tela a mysle.
                     </p>
                 </div>
-            `,
+            `
         },
         5: {
             title: '<h2 style="color: #459b4a;">Lávové kamene</h2>',
@@ -205,18 +205,18 @@ function openSwal(id) {
                     </p>
                     <p>
                         Existujú rôzne spôsoby aplikácie lávových kameňov:
-                        <ul style="margin-left: -20px;">
-                            <li><strong>Statická aplikácia:</strong> Kamene sa umiestňujú na konkrétne energetické body tela.</li>
-                            <li><strong>Masáž kameňmi:</strong> Kameňmi sa jemne masíruje pokožka pre uvoľnenie svalstva.</li>
-                            <li><strong>Kombinovaná terapia:</strong> Masáž sa kombinuje s aromaterapiou alebo reflexnou terapiou.</li>
-                        </ul>
                     </p>
+                    <ul style="margin-left: -20px;">
+                        <li><strong>Statická aplikácia:</strong> Kamene sa umiestňujú na konkrétne energetické body tela.</li>
+                        <li><strong>Masáž kameňmi:</strong> Kameňmi sa jemne masíruje pokožka na uvoľnenie svalstva.</li>
+                        <li><strong>Kombinovaná terapia:</strong> Masáž sa kombinuje s aromaterapiou alebo reflexnou terapiou.</li>
+                    </ul>
                     <p>
-                        Táto masáž sa odporúča na zmiernenie stresu, zlepšenie cirkulácie krvi,
+                        Táto masáž sa odporúča na zmiernenie stresu, zlepšenie krvného obehu,
                         detoxikáciu organizmu a obnovenie energetickej rovnováhy.
                     </p>
                 </div>
-            `,
+            `        
         },
         6: {
             title: '<h2 style="color: #459b4a;">Bankovanie - Terapia Vákuovými Pohármi</h2>',
@@ -231,18 +231,19 @@ function openSwal(id) {
                     </p>
                     <p>
                         Existujú rôzne spôsoby aplikácie bankovania:
-                        <ul style="margin-left: -20px;">
-                            <li><strong>Suché bankovanie:</strong> Poháre sa aplikujú na pokožku bez ďalších zásahov.</li>
-                            <li><strong>Mokré bankovanie:</strong> Po aplikácii sa vykonáva jemné narezanie kože na lepšiu detoxikáciu.</li>
-                            <li><strong>Pohyblivé bankovanie:</strong> Poháre sa posúvajú po natretej pokožke pre intenzívnejší účinok.</li>
-                        </ul>
                     </p>
+                    <ul style="margin-left: -20px;">
+                        <li><strong>Suché bankovanie:</strong> Poháre sa aplikujú na pokožku bez ďalších zásahov.</li>
+                        <li><strong>Mokré bankovanie:</strong> Po aplikácii sa vykonáva jemné narezanie kože pre lepšiu detoxikáciu.</li>
+                        <li><strong>Pohyblivé bankovanie:</strong> Poháre sa posúvajú po natretej pokožke pre intenzívnejší účinok.</li>
+                    </ul>
                     <p>
-                        Bankovanie je často využívané na liečbu svalových bolestí, zápalov,
+                        Bankovanie sa často využíva na liečbu svalových bolestí, zápalov,
                         migrén a na celkové posilnenie imunitného systému.
                     </p>
                 </div>
-            `,
+            `
+        
         },
         7: {
             title: '<h2 style="color: #459b4a;">Moxovanie</h2>',
@@ -257,33 +258,46 @@ function openSwal(id) {
                     </p>
                     <p>
                         Existujú rôzne spôsoby aplikácie moxy:
-                        <ul style="margin-left: -20px;">
-                            <li><strong>Priama moxa:</strong> Malé kužele moxy sa umiestňujú priamo na kožu.</li>
-                            <li><strong>Nepriama moxa:</strong> Používa sa medzičlánok ako plátok cesnaku či soľ.</li>
-                            <li><strong>Moxovacie cigary:</strong> Držia sa nad pokožkou a vytvárajú hlboké teplo.</li>
-                        </ul>
                     </p>
+                    <ul style="margin-left: -20px;">
+                        <li><strong>Priama moxa:</strong> Malé kužele moxy sa umiestňujú priamo na kožu.</li>
+                        <li><strong>Nepriama moxa:</strong> Používa sa medzičlánok ako plátok cesnaku či soľ.</li>
+                        <li><strong>Moxovacie cigary:</strong> Držia sa nad pokožkou a vytvárajú hlboké teplo.</li>
+                    </ul>
                     <p>
                         Moxovanie sa tradične využíva pri liečbe chronických ochorení, bolestí
                         kĺbov, oslabeného imunitného systému a zažívacích problémov.
                     </p>
                 </div>
-            `,
+            `        
         },
         8: {
             title: '<h2 style="color: #459b4a;">FUSS Terapia</h2>',
             html: `
                 <div style="text-align: left; font-size: 16px; line-height: 1.6; color: #333;">
-                    <p><strong>FUSS terapia</strong> je špeciálna metóda, ktorá sa sústreďuje na <strong>reflexnú masáž chodidiel</strong>
-                    s cieľom stimulovať určité body na ploskách nôh. Tieto body sú priamo prepojené s rôznymi orgánmi a systémami v tele,
-                    čo umožňuje ovplyvňovať ich funkciu a podporovať <strong>prirodzenú rovnováhu organizmu</strong>.</p>
-                    <p>Pravidelná aplikácia tejto terapie môže pomôcť zmierniť <strong>stres, napätie a únavu</strong>, podporiť
-                    <strong>správne fungovanie krvného obehu</strong> a posilniť <strong>imunitný systém</strong>. Okrem toho napomáha
-                    uvoľneniu svalstva, zlepšuje <strong>priechodnosť energetických dráh</strong> v tele a môže prispieť k celkovému pocitu pohody.</p>
-                    <p>Vďaka týmto účinkom sa <strong>FUSS terapia</strong> odporúča nielen pri riešení konkrétnych zdravotných problémov,
-                    ale aj ako účinný nástroj prevencie a podpory <strong>harmonického fungovania tela i mysle</strong>.</p>
+                    <p>
+                        <strong>FUSS terapia</strong> je špeciálna metóda, ktorá sa sústreďuje na 
+                        <strong>reflexnú masáž chodidiel</strong> s cieľom stimulovať určité body na ploskách nôh. 
+                        Tieto body sú priamo prepojené s rôznymi orgánmi a systémami v tele, 
+                        čo umožňuje ovplyvňovať ich funkciu a podporovať 
+                        <strong>prirodzenú rovnováhu organizmu</strong>.
+                    </p>
+                    <p>
+                        Pravidelná aplikácia tejto terapie môže pomôcť zmierniť 
+                        <strong>stres, napätie a únavu</strong>, podporiť 
+                        <strong>správne fungovanie krvného obehu</strong> a posilniť 
+                        <strong>imunitný systém</strong>. Okrem toho napomáha 
+                        uvoľneniu svalstva, zlepšuje 
+                        <strong>priechodnosť energetických dráh</strong> v tele a môže prispieť 
+                        k celkovému pocitu pohody.
+                    </p>
+                    <p>
+                        Vďaka týmto účinkom sa <strong>FUSS terapia</strong> odporúča nielen pri riešení 
+                        konkrétnych zdravotných problémov, ale aj ako účinný nástroj prevencie a podpory 
+                        <strong>harmonického fungovania tela i mysle</strong>.
+                    </p>
                 </div>
-            `,
+            `
         }
     };
 
@@ -292,12 +306,9 @@ function openSwal(id) {
             title: massages[id].title,
             width: '95%',
             html: massages[id].html,
-            confirmButtonText: 'Rozumiem',
+            confirmButtonText: 'Zavrieť',
             confirmButtonColor: '#28a745',
             background: "#f8f9fa",
-            customClass: {
-                popup: 'swal-massage-popup'
-            }
         });
     }
 }

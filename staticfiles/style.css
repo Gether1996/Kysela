@@ -298,13 +298,16 @@ body {
   align-items: center;
 }
 
-.fa-square-facebook,
-.fa-instagram {
+.navbar-icon {
     transition: 0.3s;
+    text-decoration: none;
+    color: black;
+    margin: 5px;
+    font-size: 30px;
+    cursor: pointer;
 }
 
-.fa-square-facebook:hover,
-.fa-instagram:hover {
+.navbar-icon:hover {
     scale: 1.3;
 }
 
@@ -317,7 +320,6 @@ body {
 .social-icons a {
   text-decoration: none;
   color: black;
-  margin: 5px;
   font-size: 30px;
 }
 
@@ -529,8 +531,8 @@ body {
 }
 
 #gallery, #technique {
-    margin-top: 100px;
-    margin-bottom: 100px;
+    margin-top: 80px;
+    margin-bottom: 70px;
 }
 
 #spolupraca {
@@ -1163,9 +1165,13 @@ body {
 }
 
 .payment-in-cash, .vernostny-program-text { 
-    font-size: 28px; 
+    font-size: 26px; 
     font-family: 'Luminari', fantasy;
     margin: 0px;
+}
+
+.swal-container-gift-card {
+    padding: 100px;
 }
 
 @media screen and (max-width: 1700px) {
@@ -1202,13 +1208,29 @@ body {
     }
 }
 
+@media screen and (max-width: 1450px) {
+    .roman-image {
+        width: 31%;
+    }
+}
+
 @media screen and (max-width: 1200px) {
     .under-navbar-text {
         height: 34px;
         gap: 30px;
         font-size: 16px;
     }
-}    
+
+    .roman-image {
+        width: 35%;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .roman-image {
+        width: 40%;
+    }
+}
 
 @media screen and (max-width: 500px) {
 
@@ -1219,6 +1241,10 @@ body {
         align-items: center;
         width: 90%;
         margin: auto;
+    }
+
+    .swal-container-gift-card {
+        padding: 10px;
     }
 
     .technique-list {
@@ -1357,6 +1383,7 @@ body {
       display: flex;
       align-items: center;
       margin: 5px;
+      gap: 5px;
     }
 
     .logo-image {
@@ -1405,6 +1432,11 @@ body {
       color: black; /* Set your preferred icon color */
       font-size: 24px;
       margin: 0;
+    }
+
+    .navbar-icon {
+        font-size: 24px;
+        margin: 0;
     }
 
     .social-icons img {
@@ -1533,7 +1565,6 @@ body {
 
     .big-button {
         padding: 6px;
-        margin: 5px 0;
         font-size: 18px;
         border: 2px solid #ccc;
         border-radius: 20px;
@@ -1590,7 +1621,7 @@ body {
     }
 
     .payment-in-cash, .vernostny-program-text { 
-        font-size: 20px; 
+        font-size: 18px; 
     }
 
     .table-container-profile {
