@@ -303,6 +303,8 @@ body {
     transition: 0.3s;
     will-change: transform;
     text-decoration: none;
+    border: none;
+    background-color: transparent;
     color: black;
     margin: 5px;
     font-size: 30px;
@@ -1384,8 +1386,8 @@ body {
     .social-icons {
       display: flex;
       align-items: center;
-      margin: 5px;
-      gap: 5px;
+      margin: 0px;
+      gap: 0px;
     }
 
     .logo-image {
@@ -1437,7 +1439,7 @@ body {
     }
 
     .navbar-icon {
-        font-size: 24px;
+        font-size: 20px;
         margin: 0;
     }
 
