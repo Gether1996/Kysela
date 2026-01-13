@@ -4,8 +4,7 @@
 
 {% block extra_head %}
     <title>PK Relax Fit</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Brush+Script+MT&display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Luminari&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@400;600;700&display=swap">
     <meta name="google-site-verification" content="RBYjh0_gAGhqf_K4wPSsz79kxLVAUMPng7TD-a0jQcY" />
 {% endblock %}
 
@@ -16,12 +15,12 @@
     <div class="top-margin-homepage"></div>
     <div class="under-navbar-text">
         <div class="third-position">
-            <i class="fa-solid fa-candle-holder"></i>
-            <p>Aromaterapia súčasťou každej masáže</p>
-            <i class="fa-solid fa-candle-holder"></i>
+            <i class="fa-solid fa-spa"></i>
+            <p style="margin: 0;">Aromaterapia súčasťou každej masáže</p>
         </div>
         <div class="two-third-position">
-            <p style="margin: 0px;">Vernostný program - každá jedenásta 45.min masáž GRATIS!</p>
+            <i class="fa-solid fa-gift"></i>
+            <p style="margin: 0;">Vernostný program - každá jedenásta 45 min masáž GRATIS!</p>
         </div>
     </div>
 
@@ -56,24 +55,37 @@
     </section>
 
     <section id="technique">
-        <h1>Cenník / Techniky</h1>
+        <h1 style="font-family: 'Playfair Display', serif; font-size: 35px;">Cenník / Techniky</h1>
 
-        <div class="technique-container-main">
-            <div style="text-align: center; margin-top: 15px;">
-                <p class="vernostny-program-text">Vernostný program - každá jedenásta 45.min masáž GRATIS!</p>
-                <br>
-                <p class="vernostny-program-text">Možnosť zakúpenia darčekovej poukážky <i onclick="openGiftCard()" class="fa-solid fa-gift-card navbar-icon" title="Ďarčeková poukážka"></i></p>
-                <br>
-                <p class="payment-in-cash" style="color: #ff6363;">! Platba možná len v hotovosti !</p>
-            </div>
+        <div class="technique-wrapper">
+            <div class="technique-container-main">
+                <div class="technique-intro-text">
+                    <div class="loyalty-program-box">
+                        <i class="fa-solid fa-gift" style="font-size: 28px; color: #4CAF50; margin-bottom: 10px;"></i>
+                        <h3>Vernostný program</h3>
+                        <p>Každá jedenásta 45 min. masáž ZADARMO!</p>
+                    </div>
+                    
+                    <div class="voucher-box">
+                        <i class="fa-solid fa-gift-card" onclick="openGiftCard()" style="font-size: 28px; color: #4CAF50; margin-bottom: 10px; cursor: pointer;" title="Darčeková poukážka"></i>
+                        <h3>Darčeková poukážka</h3>
+                        <p>Ideálny darček pre vašich blízkych</p>
+                    </div>
+                    
+                    <div class="payment-notice-box">
+                        <i class="fa-solid fa-money-bill" style="font-size: 28px; color: #ff6363; margin-bottom: 10px;"></i>
+                        <h3>Platobné podmienky</h3>
+                        <p>Platba možná len v hotovosti</p>
+                    </div>
+                </div>
             <div class="technique-container-tables">
                 <table class="price-table">
                     <tr class="category"><td colspan="2">Klasická, športová, relaxačná masáž / Mäkké techniky</td></tr>
                     <tr><td>30 min</td><td class="highlight">20 €</td></tr>
                     <tr><td>45 min</td><td class="highlight">25 €</td></tr>
                     <tr><td>60 min</td><td class="highlight">30 €</td></tr>
-                    <tr><td>90 min (dohoda telefonicky)</td><td class="highlight">40 €</td></tr>
-                    <tr><td>120 min (dohoda telefonicky)</td><td class="highlight">50 €</td></tr>
+                    <tr><td>90 min (dohoda telefonicky)</td><td class="highlight">45 €</td></tr>
+                    <tr><td>120 min (dohoda telefonicky)</td><td class="highlight">55 €</td></tr>
 
                     <tr class="category"><td colspan="2">Lávové kamene, Bankovanie, Moxovanie</td></tr>
                     <tr><td>45 min</td><td class="highlight">35 €</td></tr>
@@ -121,11 +133,12 @@
                 <button class="info-masage-button" onclick="openSwal(7)">Moxovanie</button>
                 <button class="info-masage-button" onclick="openSwal(8)">FUSS terapia</button>
             </div>
+            </div>
         </div>
     </section>
 
     <section id="gallery">
-        <h1>{% trans 'Galéria' %}</h1>
+        <h1 style="font-family: 'Playfair Display', serif; font-size: 35px;">{% trans 'Galéria' %}</h1>
             <div class="gallery-container">
                 {% for photo in photos %}
                     <img src="{{ photo.photo }}" onclick="openBiggerImage('{{ photo.photo }}')">
@@ -141,7 +154,7 @@
         <div class="gallery-container-poukazka">
             {% for voucher in vouchers %}
                 <div class="voucher-download-container">
-                    <h2 style="font-family: 'Luminari', fantasy;">{{ voucher.name }}</h2>
+                    <h2 style="font-family: 'Playfair Display', serif;">{{ voucher.name }}</h2>
                     <img src="{{ voucher.photo }}" onclick="openBiggerImage('{{ voucher.photo }}')">
                     <a class="download-button" href="{{ voucher.photo }}" download>{% trans 'Stiahnúť' %}<i class="fa-duotone fa-arrow-down-to-line"></i></a>
                 </div>
@@ -154,12 +167,33 @@
     </section>
 
     <section id="contact">
-        <div class="contact-container">
-            <div class="contact-info">
-                <p>{% trans 'PK Relax Fit' %}</p>
-                <p><i class="fa-regular fa-map-location-dot"></i> Na Rybník 636, 013 01 Teplička nad Váhom</p>
-                <p><i class="fa-duotone fa-phone"></i> +421 903 773 400</p>
-                <p><i class="fa-duotone fa-envelope"></i> kyspa@kyspa.sk</p>
+        <h1 style="text-align: center; font-family: 'Playfair Display', serif; font-size: 35px; margin-bottom: 40px;">Kontakt</h1>
+        <div class="contact-wrapper">
+            <div class="contact-container">
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fa-regular fa-map-location-dot"></i>
+                    </div>
+                    <h3>Adresa</h3>
+                    <p>Na Rybník 636</p>
+                    <p>013 01 Teplička nad Váhom</p>
+                </div>
+                
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fa-duotone fa-phone"></i>
+                    </div>
+                    <h3>Telefón</h3>
+                    <p><a href="tel:+421903773400" class="contact-link">+421 903 773 400</a></p>
+                </div>
+                
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fa-duotone fa-envelope"></i>
+                    </div>
+                    <h3>Email</h3>
+                    <p><a href="mailto:kyspa@kyspa.sk" class="contact-link">kyspa@kyspa.sk</a></p>
+                </div>
             </div>
         </div>
     </section>

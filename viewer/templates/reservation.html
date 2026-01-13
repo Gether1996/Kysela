@@ -106,11 +106,27 @@
     <div class="top-margin-reservation"></div>
 
     <div class="column-container">
-        <div style="display: flex; flex-direction: column; width: 90%; margin: auto; justify-content: center; align-items: center;">
-            <p class="payment-in-cash" style="color: #ff6363;">! Platba možná len v hotovosti !</p>
-            <p style="margin: 0px; text-align: center;">Online rezervácia aspoň 2 dni vopred, skorší termín (dnes / zajtra) telefonicky.</p>
-            <p style="margin: 0px; text-align: center;">Masáže 90 a 120 minútové, ako aj doobedné termíny len telefonicky.</p>
-            <p style="margin: 0px; font-size: 18px; font-weight: bold;">+421 903 773 400</p>
+        <div class="reservation-info-container">
+            <div class="reservation-info-card payment-card">
+                <i class="fas fa-exclamation-circle"></i>
+                <h3>Platba možná len v hotovosti</h3>
+            </div>
+            
+            <div class="reservation-info-card online-card">
+                <i class="fas fa-calendar-check"></i>
+                <div class="info-text">
+                    <p><strong>Online rezervácia</strong> aspoň 2 dni vopred</p>
+                    <p>Skorší termín (dnes / zajtra) telefonicky</p>
+                </div>
+            </div>
+            
+            <div class="reservation-info-card phone-card">
+                <i class="fas fa-phone-alt"></i>
+                <div class="info-text">
+                    <p>Masáže <strong>90 a 120 minútové</strong>, ako aj <strong>doobedné termíny</strong> len telefonicky</p>
+                    <a href="tel:+421903773400" class="phone-number">+421 903 773 400</a>
+                </div>
+            </div>
         </div>
 
         <div class="reservation-box-container">

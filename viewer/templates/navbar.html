@@ -9,18 +9,77 @@
                 <strong>PK</strong>RelaxFit
             </a>
         </div>
-        <div class="nav-links">
-            <a href="{% url 'homepage' %}" class="navbar-button">{% trans 'Domov' %}</a>
+        
+        <button class="hamburger-menu" onclick="toggleMobileMenu()" aria-label="Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        
+        <div class="nav-links" id="navLinks">
+            <a href="{% url 'homepage' %}" class="navbar-button" onclick="closeMobileMenu()">{% trans 'Domov' %}</a>
+            
+            <div class="mobile-social-buttons">
+                <button onclick="openGiftCard(); closeMobileMenu();" class="navbar-button mobile-social-btn">
+                    <i class="fa-solid fa-gift-card"></i> {% trans 'Darčeková poukážka' %}
+                </button>
+                <button onclick="openViberInfo(); closeMobileMenu();" class="navbar-button mobile-social-btn">
+                    <i class="fa-brands fa-whatsapp"></i> WhatsApp / Viber
+                </button>
+                <a href="https://www.facebook.com/PKRelaxFit" target="_blank" class="navbar-button mobile-social-btn" onclick="closeMobileMenu()">
+                    <i class="fa-brands fa-square-facebook"></i> Facebook
+                </a>
+            </div>
+            
+            {% if request.user.is_authenticated %}
+            <div class="mobile-account-section">
+                <div class="mobile-account-header">
+                    <i class="fa-duotone fa-user"></i>
+                    <span>{{ user.email }}</span>
+                </div>
+                {% if user.is_superuser %}
+                    <a href="{% url 'settings_view' %}" class="navbar-button mobile-account-btn" onclick="closeMobileMenu()">
+                        <i class="fa-solid fa-gear"></i> {% trans 'Nastavenia' %}
+                    </a>
+                    <a href="{% url 'all_reservations' %}" class="navbar-button mobile-account-btn" onclick="closeMobileMenu()">
+                        <i class="fa-solid fa-calendar-days"></i> {% trans 'Prehľad rezervácií' %}
+                    </a>
+                    <a href="{% url 'calendar_view_admin' %}" class="navbar-button mobile-account-btn" onclick="closeMobileMenu()">
+                        <i class="fa-solid fa-calendar"></i> {% trans 'Kalendár' %}
+                    </a>
+                {% else %}
+                    <a href="{% url 'profile' %}" class="navbar-button mobile-account-btn" onclick="closeMobileMenu()">
+                        <i class="fa-solid fa-user"></i> {% trans 'Môj profil' %}
+                    </a>
+                {% endif %}
+                <button onclick="logoutConfirmation(); closeMobileMenu();" class="navbar-button mobile-account-btn mobile-logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> {% trans 'Odhlásiť sa' %}
+                </button>
+            </div>
+            {% else %}
+            <div class="mobile-account-section">
+                <div class="mobile-account-header">
+                    <i class="fa-duotone fa-user"></i>
+                    <span>{% trans 'Účet' %}</span>
+                </div>
+                <button onclick="login(); closeMobileMenu();" class="navbar-button mobile-account-btn">
+                    <i class="fa-duotone fa-right-to-bracket"></i> {% trans 'Prihlásiť sa' %}
+                </button>
+                <button onclick="registration(); closeMobileMenu();" class="navbar-button mobile-account-btn">
+                    <i class="fa-duotone fa-user-plus"></i> {% trans 'Registrácia' %}
+                </button>
+            </div>
+            {% endif %}
         </div>
         <div class="nav-contact">
-            <div class="social-icons">
-                <button onclick="openGiftCard()" class="navbar-icon" title="Ďarčeková poukážka">
+            <div class="desktop-social-icons">
+                <button onclick="openGiftCard()" class="navbar-icon" title="Darčeková poukážka">
                     <i class="fa-solid fa-gift-card"></i>
                 </button>
                 <button onclick="openViberInfo()" class="navbar-icon" title="WhatsApp / Viber">
                     <i class="fa-brands fa-whatsapp"></i>
                 </button>
-                <a href="https://www.facebook.com/PKRelaxFit" target="_blank" class="navbar-icon" style="margin: 5px;" title="Facebook">
+                <a href="https://www.facebook.com/PKRelaxFit" target="_blank" class="navbar-icon" title="Facebook">
                     <i class="fa-brands fa-square-facebook"></i>
                 </a>
             </div>
@@ -49,9 +108,11 @@
                     <a class="dropdown-link" href="{% url 'settings_view' %}">{% trans 'Nastavenia' %}</a>
                     <a class="dropdown-link" href="{% url 'all_reservations' %}">{% trans 'Prehľad rezervácií' %}</a>
                     <a class="dropdown-link" href="{% url 'calendar_view_admin' %}">{% trans 'Kalendár' %}</a>
+                    <hr class="dropdown-divider">
                     <a class="dropdown-link" href="#" onclick="logoutConfirmation()"><i class="fas fa-sign-out-alt"></i> {% trans 'Odhlásiť sa' %}</a>
                 {% else %}
                     <a class="dropdown-link" href="{% url 'profile' %}">{% trans 'Môj profil' %}</a>
+                    <hr class="dropdown-divider">
                     <a class="dropdown-link" href="#" onclick="logoutConfirmation()"><i class="fas fa-sign-out-alt"></i> {% trans 'Odhlásiť sa' %}</a>
                 {% endif %}
             </div>

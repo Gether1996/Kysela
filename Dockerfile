@@ -11,8 +11,11 @@ RUN pip install -r requirements.txt
 # Copy the current directory contents into the container at /app
 COPY . /app/
 
+# Collect static files
+RUN python manage.py collectstatic --noinput
+
 # Expose the port the Django app runs on
 EXPOSE 8000
 
-# Run the Django app
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+# Run the Django app with gunicorn
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "3", "Roman.wsgi:application"]

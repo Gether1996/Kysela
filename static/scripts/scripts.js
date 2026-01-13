@@ -60,28 +60,90 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function openGiftCard() {
     Swal.fire({
+        width: '850px',
         html: `
-            <div class="swal-container-gift-card">
-                <h1>Darčeková poukážka</h1>
-                <img src="/static/images/poukaz.jpg" alt="Gift Card" style="width: 100%; max-width: 600px; margin-bottom: 15px;">
-                <p>Potešte svojich blízkych darčekovou poukážkou! <br> Zavolajte na číslo <strong>+421 903 773 400</strong> a dohodneme objednávku. </p>
+            <div class="swal-modern-container">
+                <div class="swal-icon-header">
+                    <i class="fa-solid fa-gift-card" style="font-size: 50px; color: #4CAF50;"></i>
+                </div>
+                <h2 class="swal-title">Darčeková poukážka</h2>
+                <div class="swal-image-container">
+                    <img src="/static/images/poukaz.jpg" alt="Gift Card" class="swal-gift-image">
+                </div>
+                <div class="swal-info-box">
+                    <p class="swal-description">Potešte svojich blízkych darčekovou poukážkou na profesionálnu masáž!</p>
+                    <div class="swal-contact-box">
+                        <i class="fa-duotone fa-phone" style="font-size: 24px; color: #4CAF50;"></i>
+                        <div>
+                            <p style="margin: 0; font-size: 14px; color: #666;">Objednajte telefonicky</p>
+                            <a href="tel:+421903773400" style="font-size: 22px; font-weight: 700; color: #2E7D32; text-decoration: none;">+421 903 773 400</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         `,
         showCloseButton: false,
-        confirmButtonText: 'Zavrieť'
+        confirmButtonText: 'Zavrieť',
+        confirmButtonColor: '#4CAF50',
+        customClass: {
+            popup: 'swal-modern-popup'
+        }
     });
 }
 
 function openViberInfo() {
     Swal.fire({
+        width: '700px',
         html: `
-            <div class="swal-container-gift-card">
-                <h1><i class="fa-brands fa-whatsapp"></i> WhatsApp a Viber <i class="fa-brands fa-viber"></i></h1>
-                <h2 style="margin: 0px;"><strong>Pavol Kysela</strong></h2>
-                <h2 style="margin: 0px;"><strong>+421 903 773 400</strong></h2>
+            <div class="swal-modern-container">
+                <div class="swal-icon-header">
+                    <i class="fa-brands fa-whatsapp" style="font-size: 50px; color: #25D366;"></i>
+                    <i class="fa-brands fa-viber" style="font-size: 50px; color: #7360F2; margin-left: 20px;"></i>
+                </div>
+                <h2 class="swal-title">Kontaktujte nás cez messenger</h2>
+                <div class="swal-messenger-grid">
+                    <div class="swal-messenger-card">
+                        <i class="fa-brands fa-whatsapp" style="font-size: 40px; color: #25D366;"></i>
+                        <h3>WhatsApp</h3>
+                        <a href="https://wa.me/421903773400" target="_blank" class="swal-messenger-btn whatsapp-btn">
+                            <i class="fa-brands fa-whatsapp"></i> Otvoriť WhatsApp
+                        </a>
+                    </div>
+                    <div class="swal-messenger-card">
+                        <i class="fa-brands fa-viber" style="font-size: 40px; color: #7360F2;"></i>
+                        <h3>Viber</h3>
+                        <a href="viber://chat?number=421903773400" class="swal-messenger-btn viber-btn">
+                            <i class="fa-brands fa-viber"></i> Otvoriť Viber
+                        </a>
+                    </div>
+                </div>
+                <div class="swal-info-box" style="margin-top: 25px;">
+                    <p style="margin: 0; font-weight: 600; color: #333;">Pavol Kysela</p>
+                    <a href="tel:+421903773400" style="font-size: 20px; font-weight: 700; color: #2E7D32; text-decoration: none;">+421 903 773 400</a>
+                </div>
             </div>
         `,
         showCloseButton: false,
-        confirmButtonText: 'Zavrieť'
+        confirmButtonText: 'Zavrieť',
+        confirmButtonColor: '#4CAF50',
+        customClass: {
+            popup: 'swal-modern-popup'
+        }
     });
+}
+
+function toggleMobileMenu() {
+    const navLinks = document.getElementById('navLinks');
+    const hamburger = document.querySelector('.hamburger-menu');
+    navLinks.classList.toggle('active');
+    hamburger.classList.toggle('active');
+}
+
+function closeMobileMenu() {
+    const navLinks = document.getElementById('navLinks');
+    const hamburger = document.querySelector('.hamburger-menu');
+    if (navLinks.classList.contains('active')) {
+        navLinks.classList.remove('active');
+        hamburger.classList.remove('active');
+    }
 }
