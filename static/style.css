@@ -333,7 +333,6 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 50px;
 }
 
 .nav-links {
@@ -1925,31 +1924,62 @@ body {
         font-size: 18px;
     }
 
+    .top-margin-homepage {
+        margin-top: 80px;
+    }
+
     .under-navbar-text {
         position: relative;
-        height: 60px;
+        height: auto;
         flex-direction: column;
-        gap: 0px;
-        font-size: 14px;
-        background: linear-gradient(135deg, #4CAF50, #2E7D32);
+        gap: 0;
+        font-size: 11px;
+        background: #2E7D32;
         margin-top: 0;
+        padding: 8px 0px;
     }
 
     .third-position {
-        font-size: 12px;
+        font-size: 11px;
         display: flex;
         align-items: center;
-        gap: 10px;
+        justify-content: center;
+        gap: 6px;
         flex-shrink: 0;
-        margin: 0px;
-        padding: 0px;
+        margin: 0;
+        padding: 4px 0;
+        font-weight: 500;
+        text-align: center;
+        background: transparent;
+        border: none;
+        border-bottom: none;
+    }
+
+    .third-position i {
+        font-size: 14px;
     }
 
     .two-third-position {
-        font-size: 12px;
-        margin: auto;
+        font-size: 11px;
+        margin: 0;
         flex-shrink: 0;
         text-align: center;
+        padding: 4px 0;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        background: transparent;
+        border: none;
+        outline: none;
+    }
+
+    .two-third-position i {
+        font-size: 14px;
+        margin-right: 0;
+        border: none;
+        outline: none;
     }
 
     .technique-container-tables {
@@ -2117,6 +2147,7 @@ body {
     .hamburger-menu {
         display: flex;
         z-index: 1001;
+        margin-right: 0px;
     }
 
     .navbar-user-info {
@@ -2369,6 +2400,7 @@ body {
         display: flex;
         flex-direction: column;
         margin: 30px auto;
+        margin-top: 0px;
         width: 95%;
         padding: 10px;
     }
