@@ -7,6 +7,7 @@ from django.shortcuts import redirect
 from accounts.models import CustomUser
 from viewer.models import AlreadyMadeReservation
 from django.utils.translation import gettext_lazy as _
+from Roman.backend_funcs.general import superuser_required_api
 import re
 
 
@@ -63,11 +64,15 @@ def registration(request):
     return JsonResponse({'status': 'error', 'message': _('Zlý request')})
 
 
+@superuser_required_api
 def delete_saved_person(request):
     if request.method == 'DELETE':
         json_data = json.loads(request.body.decode('utf-8'))
 
-        saved_person = AlreadyMadeReservation.objects.get(id=int(json_data['id']))
+        try:
+            saved_person = AlreadyMadeReservation.objects.get(id=int(json_data['id']))
+        except (AlreadyMadeReservation.DoesNotExist, ValueError, KeyError):
+            return JsonResponse({'status': 'error', 'message': 'Osoba sa nenašla.'})
         saved_person.delete()
         return JsonResponse({'status': 'success'})
     return JsonResponse({'status': 'error'})

@@ -1,4 +1,6 @@
+import logging
 from django.conf import settings
+from django.core import signing
 from django.http import JsonResponse
 from viewer.models import Reservation, TurnedOffDay, AlreadyMadeReservation
 import json
@@ -7,18 +9,38 @@ from django.utils.translation import gettext_lazy as _
 import configparser
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
+from Roman.backend_funcs.general import superuser_required_api
 
 config = configparser.ConfigParser()
 
+logger = logging.getLogger(__name__)
+
+APPROVE_TOKEN_SALT = 'approve-reservation-mail'
+APPROVE_TOKEN_MAX_AGE = 60 * 60 * 24 * 30  # 30 dní
+
+def make_approve_token(reservation_id):
+    return signing.dumps(reservation_id, salt=APPROVE_TOKEN_SALT)
+
+def read_approve_token(token):
+    """Vráti id rezervácie alebo None, ak je token neplatný/expirovaný."""
+    try:
+        return signing.loads(token, salt=APPROVE_TOKEN_SALT, max_age=APPROVE_TOKEN_MAX_AGE)
+    except signing.BadSignature:
+        return None
+
 def send_email(subject, html_message, to_mail):
     from_email = getattr(settings, 'EMAIL_HOST_USER')
-    send_mail(
-        subject=subject,
-        message='',
-        from_email=from_email,
-        recipient_list=[to_mail],
-        html_message=html_message,
-    )
+    try:
+        send_mail(
+            subject=subject,
+            message='',
+            from_email=from_email,
+            recipient_list=[to_mail],
+            html_message=html_message,
+        )
+    except Exception:
+        # Zlyhanie SMTP nesmie zhodiť request - rezervácia je už uložená v DB
+        logger.exception('Nepodarilo sa odoslať email "%s" na %s', subject, to_mail)
 
 def prepare_reservation_data(reservation):
     data = {
@@ -39,28 +61,83 @@ def prepare_reservation_data(reservation):
 
     return data
 
+def validate_reservation_slot(datetime_from_obj, datetime_to_obj, duration):
+    """Serverová validácia rezervácie bežného zákazníka. Vráti chybovú hlášku alebo None."""
+    if duration not in (30, 45, 60):
+        return _('Neplatná dĺžka masáže.')
+
+    if datetime_from_obj <= datetime.now():
+        return _('Termín musí byť v budúcnosti.')
+
+    if datetime_from_obj.minute % 15 != 0:
+        return _('Neplatný začiatok termínu.')
+
+    worker_config = config['settings']
+    weekday_name = datetime_from_obj.strftime('%A')
+    if weekday_name not in worker_config['working_days']:
+        return _('V tento deň sa nemasíruje.')
+
+    starting_hour_str = worker_config.get(f'{weekday_name}_starting_hour')
+    ending_hour_str = worker_config.get(f'{weekday_name}_ending_hour')
+    if not starting_hour_str or not ending_hour_str:
+        return _('V tento deň sa nemasíruje.')
+
+    starting_hour = datetime.strptime(starting_hour_str, '%H:%M').time()
+    ending_hour = datetime.strptime(ending_hour_str, '%H:%M').time()
+    if datetime_from_obj.time() < starting_hour or datetime_to_obj.time() > ending_hour:
+        return _('Termín je mimo pracovných hodín.')
+
+    selected_date = datetime_from_obj.date()
+    for off_day in TurnedOffDay.objects.filter(date=selected_date):
+        if off_day.whole_day:
+            return _('V tento deň sa nemasíruje.')
+        if off_day.time_from and off_day.time_to:
+            if off_day.time_from < datetime_to_obj.time() and datetime_from_obj.time() < off_day.time_to:
+                return _('Termín nie je dostupný.')
+
+    # Kontrola prekrytia s existujúcimi schválenými rezerváciami (s 15 min prestávkou),
+    # aby nevznikol double-booking, keď má stránku otvorenú viac ľudí naraz.
+    overlapping = Reservation.objects.filter(
+        active=True,
+        datetime_from__lt=datetime_to_obj + timedelta(minutes=15),
+        datetime_to__gt=datetime_from_obj - timedelta(minutes=15),
+    ).exists()
+    if overlapping:
+        return _('Termín je už obsadený, vyberte prosím iný.')
+
+    return None
+
 def create_reservation(request):
     if request.method == 'POST':
         active = False
         status = 'Čaká sa schválenie'
         note = 'user'
         user = request.user if request.user.is_authenticated else None
-        if user and user.is_superuser:
+        is_admin = bool(user and user.is_superuser)
+        if is_admin:
             active = True
             status = 'Schválená'
             note = 'admin'
 
         config.read('config.ini')
-        json_data = json.loads(request.body)
+        try:
+            json_data = json.loads(request.body)
+            selected_date = json_data.get('selectedDate')
+            time_slot = json_data.get('timeSlot')
+            duration = int(json_data.get('duration'))
+            datetime_from_obj = datetime.strptime(f"{selected_date} {time_slot}", "%Y-%m-%d %H:%M")
+        except (json.JSONDecodeError, ValueError, TypeError):
+            return JsonResponse({'status': 'error', 'message': _('Neplatné údaje rezervácie.')}, status=400)
 
-        selected_date = json_data.get('selectedDate')
-        time_slot = json_data.get('timeSlot')
-        duration = json_data.get('duration')
+        date_time_to_obj = datetime_from_obj + timedelta(minutes=duration)
 
-        datetime_from_obj = datetime.strptime(f"{selected_date} {time_slot}", "%Y-%m-%d %H:%M")
-        date_time_to_obj = datetime_from_obj + timedelta(minutes=int(duration))
+        if not json_data.get('nameSurname'):
+            return JsonResponse({'status': 'error', 'message': _('Chýba meno a priezvisko.')}, status=400)
 
-        user = request.user if request.user.is_authenticated else None
+        if not is_admin:
+            error = validate_reservation_slot(datetime_from_obj, date_time_to_obj, duration)
+            if error:
+                return JsonResponse({'status': 'error', 'message': str(error)}, status=400)
 
         new_reservation = Reservation.objects.create(
             user=user,
@@ -90,7 +167,7 @@ def create_reservation(request):
         if note == 'user':
             current_domain = getattr(settings, 'CURRENT_DOMAIN')
             subject = f'Nová rezervácia'
-            accept_link = f'{current_domain}/approve_reservation_mail/{new_reservation.id}/'
+            accept_link = f'{current_domain}/approve_reservation_mail/{make_approve_token(new_reservation.id)}/'
             all_reservations_link = f'{current_domain}/all_reservations/'
             html_message = render_to_string('email_template.html',
                                             {'reservation': prepare_reservation_data(new_reservation),
@@ -342,11 +419,17 @@ def check_available_slots_ahead(request):
     return JsonResponse({'status': 'error'})
 
 def deactivate_reservation(request):
+    if not request.user.is_authenticated:
+        return JsonResponse({'status': 'error', 'message': _('Najskôr sa prihláste.')}, status=403)
+
     if request.method == 'DELETE':
         json_data = json.loads(request.body)
 
         try:
             reservation = Reservation.objects.get(id=json_data.get('reservation_id'))
+            # Zákazník smie zrušiť len vlastnú rezerváciu (podľa emailu účtu)
+            if not request.user.is_superuser and reservation.email != request.user.email:
+                return JsonResponse({'status': 'error', 'message': _('Prístup zamietnutý.')}, status=403)
             reservation.active = False
             reservation.status = 'Zrušená zákazníkom'
             reservation.cancellation_reason = json_data.get('reason')
@@ -356,6 +439,7 @@ def deactivate_reservation(request):
             return JsonResponse({'status': 'error', 'message': _('Rezervácia sa nenašla.')})
     return JsonResponse({'status': 'error', 'message': _('Zlý request')})
 
+@superuser_required_api
 def approve_reservation(request):
     if request.method == 'POST':
         json_data = json.loads(request.body)
@@ -379,6 +463,7 @@ def approve_reservation(request):
             return JsonResponse({'status': 'error'})
     return JsonResponse({'status': 'error', 'message': _('Zlý request')})
 
+@superuser_required_api
 def deactivate_reservation_by_admin(request):
     if request.method == 'DELETE':
         json_data = json.loads(request.body)
@@ -404,6 +489,7 @@ def deactivate_reservation_by_admin(request):
             return JsonResponse({'status': 'error'})
     return JsonResponse({'status': 'error', 'message': _('Zlý request')})
 
+@superuser_required_api
 def delete_reservation(request):
     if request.method == 'DELETE':
         json_data = json.loads(request.body)
@@ -417,6 +503,7 @@ def delete_reservation(request):
             return JsonResponse({'status': 'error'})
     return JsonResponse({'status': 'error', 'message': _('Zlý request')})
 
+@superuser_required_api
 def add_personal_note(request):
     if request.method == 'POST':
         json_data = json.loads(request.body)

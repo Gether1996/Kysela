@@ -3,10 +3,12 @@ from django.http import JsonResponse
 import configparser
 from viewer.models import TurnedOffDay
 from datetime import datetime, timedelta
+from Roman.backend_funcs.general import superuser_required_api
 
 config = configparser.ConfigParser()
 config.read('config.ini')
 
+@superuser_required_api
 def save_settings(request):
     if request.method == 'POST':
         json_data = json.loads(request.body)
@@ -35,6 +37,7 @@ def save_settings(request):
         return JsonResponse({'status': 'success'})
     return JsonResponse({'status': 'error'})
 
+@superuser_required_api
 def add_turned_off_day(request):
     if request.method == 'POST':
         json_data = json.loads(request.body)
@@ -63,6 +66,7 @@ def add_turned_off_day(request):
         return JsonResponse({'status': 'success'})
     return JsonResponse({'status': 'error'})
 
+@superuser_required_api
 def delete_turned_off_day(request):
     if request.method == 'DELETE':
         json_data = json.loads(request.body)
@@ -75,6 +79,7 @@ def delete_turned_off_day(request):
             return JsonResponse({'status': 'error', 'message': 'Obmedzenie sa nenašlo.'})
     return JsonResponse({'status': 'error'})
 
+@superuser_required_api
 def delete_turned_off_days(request):
     if request.method == 'DELETE':
         json_data = json.loads(request.body)

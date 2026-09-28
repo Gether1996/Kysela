@@ -6,7 +6,8 @@ from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils.translation import activate
 from django.utils.translation import gettext_lazy as _
-from Roman.backend_funcs.reservation import prepare_reservation_data, send_email
+from Roman.backend_funcs.general import superuser_required_api
+from Roman.backend_funcs.reservation import prepare_reservation_data, send_email, read_approve_token
 from accounts.models import CustomUser
 from viewer.models import GalleryPhoto, VoucherPhoto, Reservation, TurnedOffDay, AlreadyMadeReservation
 from datetime import datetime
@@ -58,16 +59,20 @@ def calendar_view_admin(request):
 
 
 def reservation(request):
-    users = AlreadyMadeReservation.objects.all().order_by('name_surname')
-    user_data = [
-        {
-            'id': str(user.id),
-            'name_surname': user.name_surname,
-            'email': user.email if user.email else '',
-            'phone': user.phone_number if user.phone_number else '',
-        }
-        for user in users
-    ]
+    # Zoznam uložených zákazníkov (osobné údaje) smie dostať len admin -
+    # bežnému návštevníkovi sa nesmie dostať do zdrojového kódu stránky.
+    user_data = []
+    if request.user.is_authenticated and request.user.is_superuser:
+        users = AlreadyMadeReservation.objects.all().order_by('name_surname')
+        user_data = [
+            {
+                'id': str(user.id),
+                'name_surname': user.name_surname,
+                'email': user.email if user.email else '',
+                'phone': user.phone_number if user.phone_number else '',
+            }
+            for user in users
+        ]
     return render(request, 'reservation.html', {'user_data': user_data})
 
 def settings(request):
@@ -196,6 +201,7 @@ def all_reservations(request):
     return render(request, 'all_reservations.html', context)
 
 
+@superuser_required_api
 def get_all_reservations_data(request):
     config.read('config.ini')
     filters = {
@@ -287,8 +293,13 @@ def get_all_reservations_data(request):
 
     return JsonResponse(response_data, safe=False)
 
-def approve_reservation_mail(request, reservation_id):
+def approve_reservation_mail(request, token):
     if request.method == 'GET':
+        reservation_id = read_approve_token(token)
+        if reservation_id is None:
+            message = 'Neplatný alebo expirovaný odkaz.'
+            return render(request, 'error.html', {'message': message})
+
         try:
             reserv = Reservation.objects.get(id=reservation_id)
 

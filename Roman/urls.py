@@ -64,7 +64,7 @@ urlpatterns = [
     path('add_personal_note/', add_personal_note, name='add_personal_note'),
     path('delete_reservation/', delete_reservation, name='delete_reservation'),
 
-    path('approve_reservation_mail/<int:reservation_id>/', approve_reservation_mail, name='approve_reservation_mail'),
+    path('approve_reservation_mail/<str:token>/', approve_reservation_mail, name='approve_reservation_mail'),
     path('delete_saved_person/', delete_saved_person, name='delete_saved_person'),
 
 
