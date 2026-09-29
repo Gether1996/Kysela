@@ -16,21 +16,18 @@
     <div class="under-navbar-text">
         <div class="third-position">
             <i class="fa-solid fa-spa"></i>
-            <p style="margin: 0;">Aromaterapia súčasťou každej masáže</p>
+            <p>Aromaterapia súčasťou každej masáže</p>
         </div>
         <div class="two-third-position">
             <i class="fa-solid fa-gift"></i>
-            <p style="margin: 0;">Vernostný program - každá jedenásta 45 min masáž GRATIS!</p>
+            <p>Vernostný program - každá jedenásta 45 min masáž GRATIS!</p>
         </div>
     </div>
 
     <section id="about-us">
-        <br>
-        <br>
-        <br>
        <div class="about-us-container">
-           <div class="person-container">
-               <img class="roman-image" src="{% static 'images/profil.jpg' %}">
+           <div class="person-container reveal">
+               <img class="roman-image" src="{% static 'images/profil.jpg' %}" alt="Pavol Kysela">
                <div class="person-info">
                    <h3 class="name-surname">
                        Pavol Kysela
@@ -49,38 +46,38 @@
            </div>
        </div>
 
-       <div style="display: flex; justify-content: center">
+       <div class="center-row reveal">
            <a href="{% url 'reservation' %}" class="reservation-button-about-us"><i class="fa-solid fa-calendar-circle-plus"></i> {% trans 'Rezervovať termín' %}</a>
        </div>
     </section>
 
     <section id="technique">
-        <h1 style="font-family: 'Playfair Display', serif; font-size: 35px;">Cenník / Techniky</h1>
+        <h1 class="reveal">Cenník / Techniky</h1>
 
         <div class="technique-wrapper">
             <div class="technique-container-main">
                 <div class="technique-intro-text">
-                    <div class="loyalty-program-box">
-                        <i class="fa-solid fa-gift" style="font-size: 28px; color: #4CAF50; margin-bottom: 10px;"></i>
+                    <div class="loyalty-program-box reveal">
+                        <i class="fa-solid fa-gift box-icon"></i>
                         <h3>Vernostný program</h3>
                         <p>Každá jedenásta 45 min. masáž ZADARMO!</p>
                     </div>
-                    
-                    <div class="voucher-box">
-                        <i class="fa-solid fa-gift-card" onclick="openGiftCard()" style="font-size: 28px; color: #4CAF50; margin-bottom: 10px; cursor: pointer;" title="Darčeková poukážka"></i>
+
+                    <div class="voucher-box reveal">
+                        <i class="fa-solid fa-gift-card box-icon box-icon-clickable" onclick="openGiftCard()" title="Darčeková poukážka"></i>
                         <h3>Darčeková poukážka</h3>
                         <p>Ideálny darček pre vašich blízkych</p>
                     </div>
-                    
-                    <div class="payment-notice-box">
-                        <i class="fa-solid fa-money-bill" style="font-size: 28px; color: #ff6363; margin-bottom: 10px;"></i>
+
+                    <div class="payment-notice-box reveal">
+                        <i class="fa-solid fa-money-bill box-icon box-icon-red"></i>
                         <h3>Platobné podmienky</h3>
                         <p>Preferovaná platba v hotovosti</p>
-                        <p>Možnosť platby QR kódom – <span style="color: red;">len pre banky s čítačkami QR kódov pre VRP</span></p>
+                        <p>Možnosť platby QR kódom – <span class="payment-warning">len pre banky s čítačkami QR kódov pre VRP</span></p>
                     </div>
                 </div>
             <div class="technique-container-tables">
-                <table class="price-table">
+                <table class="price-table reveal">
                     <tr class="category"><td colspan="2">Klasická, športová, relaxačná masáž / Mäkké techniky</td></tr>
                     <tr><td>30 min</td><td class="highlight">23 €</td></tr>
                     <tr><td>45 min</td><td class="highlight">28 €</td></tr>
@@ -92,13 +89,13 @@
 
                     <tr class="category"><td colspan="2">Terapeutická čínska tlaková masáž chodidiel (FUSS terapia)</td></tr>
                     <tr><td>60 min</td><td class="highlight">40 €</td></tr>
-                    <tr><td></td><td style="text-align: right; white-space: nowrap;">Cenník platný od 01.10.2026</td></tr>
+                    <tr><td></td><td class="price-validity">Cenník platný od 01.10.2026</td></tr>
                 </table>
 
-                <table class="price-table">
+                <table class="price-table reveal">
                         <tr class="category">
                             <td>Odporúčané kombinácie masáží (orientačný celkový čas)</td>
-                            <td style="text-align: right;">Čas</td>
+                            <td class="category-time">Čas</td>
                         </tr>
                         <tr><td>Chrbát + šija (klasik + čínska tlaková)</td><td class="highlight">45 – 60 min</td></tr>
                         <tr><td>Chrbát + šija (klasik + bankovanie alebo lávové kamene)</td><td class="highlight">45 – 60 min</td></tr>
@@ -111,53 +108,48 @@
             </div>
 
             <div class="info-buttons-container">
-                <button class="info-masage-button" onclick="openSwal(1)">Klasická masáž</button>
-                <button class="info-masage-button" onclick="openSwal(2)">Športová masáž</button>
-                <button class="info-masage-button" onclick="openSwal(3)">Relaxačná masáž</button>
-                <button class="info-masage-button" onclick="openSwal(4)">Mäkké techniky</button>
-                <button class="info-masage-button" onclick="openSwal(5)">Lávové kamene</button>
-                <button class="info-masage-button" onclick="openSwal(6)">Bankovanie</button>
-                <button class="info-masage-button" onclick="openSwal(7)">Moxovanie</button>
-                <button class="info-masage-button" onclick="openSwal(8)">FUSS terapia</button>
+                <button class="info-masage-button reveal" onclick="openSwal(1)">Klasická masáž</button>
+                <button class="info-masage-button reveal" onclick="openSwal(2)">Športová masáž</button>
+                <button class="info-masage-button reveal" onclick="openSwal(3)">Relaxačná masáž</button>
+                <button class="info-masage-button reveal" onclick="openSwal(4)">Mäkké techniky</button>
+                <button class="info-masage-button reveal" onclick="openSwal(5)">Lávové kamene</button>
+                <button class="info-masage-button reveal" onclick="openSwal(6)">Bankovanie</button>
+                <button class="info-masage-button reveal" onclick="openSwal(7)">Moxovanie</button>
+                <button class="info-masage-button reveal" onclick="openSwal(8)">FUSS terapia</button>
             </div>
             </div>
         </div>
     </section>
 
     <section id="gallery">
-        <h1 style="font-family: 'Playfair Display', serif; font-size: 35px;">{% trans 'Galéria' %}</h1>
+        <h1 class="reveal">{% trans 'Galéria' %}</h1>
             <div class="gallery-container">
                 {% for photo in photos %}
-                    <img src="{{ photo.photo }}" onclick="openBiggerImage('{{ photo.photo }}')">
+                    <figure class="gallery-item reveal" onclick="openBiggerImage('{{ photo.photo }}')">
+                        <img src="{{ photo.photo }}" alt="{% trans 'Fotografia z masáže' %}" loading="lazy">
+                        <span class="gallery-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span>
+                    </figure>
                 {% endfor %}
-            </div>
-            <div id="myModal" class="modal">
-                <span class="close">&times;</span>
-                <img class="modal-content" id="img01">
             </div>
     </section>
 
-    <section id="poukazka" style="margin-bottom: 50px;">
+    <section id="poukazka">
         <div class="gallery-container-poukazka">
             {% for voucher in vouchers %}
-                <div class="voucher-download-container">
-                    <h2 style="font-family: 'Playfair Display', serif;">{{ voucher.name }}</h2>
-                    <img src="{{ voucher.photo }}" onclick="openBiggerImage('{{ voucher.photo }}')">
+                <div class="voucher-download-container reveal">
+                    <h2>{{ voucher.name }}</h2>
+                    <img src="{{ voucher.photo }}" onclick="openBiggerImage('{{ voucher.photo }}')" alt="{{ voucher.name }}" loading="lazy">
                     <a class="download-button" href="{{ voucher.photo }}" download>{% trans 'Stiahnúť' %}<i class="fa-duotone fa-arrow-down-to-line"></i></a>
                 </div>
             {% endfor %}
         </div>
-        <div id="myModal" class="modal">
-            <span class="close">&times;</span>
-            <img class="modal-content" id="img01">
-        </div>
     </section>
 
     <section id="contact">
-        <h1 style="text-align: center; font-family: 'Playfair Display', serif; font-size: 35px; margin-bottom: 40px;">Kontakt</h1>
+        <h1 class="reveal">Kontakt</h1>
         <div class="contact-wrapper">
             <div class="contact-container">
-                <div class="contact-card">
+                <div class="contact-card reveal">
                     <div class="contact-icon">
                         <i class="fa-regular fa-map-location-dot"></i>
                     </div>
@@ -165,16 +157,16 @@
                     <p>Na Rybník 636</p>
                     <p>013 01 Teplička nad Váhom</p>
                 </div>
-                
-                <div class="contact-card">
+
+                <div class="contact-card reveal">
                     <div class="contact-icon">
                         <i class="fa-duotone fa-phone"></i>
                     </div>
                     <h3>Telefón</h3>
                     <p><a href="tel:+421903773400" class="contact-link">+421 903 773 400</a></p>
                 </div>
-                
-                <div class="contact-card">
+
+                <div class="contact-card reveal">
                     <div class="contact-icon">
                         <i class="fa-duotone fa-envelope"></i>
                     </div>
@@ -184,6 +176,11 @@
             </div>
         </div>
     </section>
+
+    <div id="myModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="img01" alt="">
+    </div>
 
 {% endblock %}
 

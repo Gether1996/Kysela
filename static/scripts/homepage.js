@@ -1,416 +1,227 @@
 function smoothScroll(targetId) {
     var target = document.getElementById(targetId);
-    if (target) {
-      // Dynamically calculate navbar + under-navbar-text height
-      var navbar = document.querySelector('.navbar');
-      var underNavbar = document.querySelector('.under-navbar-text');
-      var navbarHeight = navbar ? navbar.offsetHeight : 120;
-      var underNavbarHeight = underNavbar ? underNavbar.offsetHeight : 40;
-      
-      // Check if mobile view
-      var isMobile = window.innerWidth <= 500;
-      var offset = isMobile ? navbarHeight + 10 : navbarHeight + underNavbarHeight - 60;
-      
-      var targetPosition = target.offsetTop - offset;
-      var startPosition = window.pageYOffset; // Get current position
-      var distance = targetPosition - startPosition;
-      var duration = 1000; // Set the duration of the scroll in milliseconds
-      let start = null;
-
-      // Function to perform the scrolling animation
-      function animation(currentTime) {
-        if (start === null) {
-          start = currentTime;
-        }
-        var timeElapsed = currentTime - start;
-        var run = ease(timeElapsed, startPosition, distance, duration);
-        window.scrollTo(0, run);
-        if (timeElapsed < duration) {
-          requestAnimationFrame(animation);
-        }
-      }
-
-      // Easing function for smooth scrolling
-      function ease(t, b, c, d) {
-        t /= d / 2;
-        if (t < 1) return c / 2 * t * t + b;
-        t--;
-        return -c / 2 * (t * (t - 2) - 1) + b;
-      }
-
-      requestAnimationFrame(animation);
-    }
+    if (!target) return;
+    var navbar = document.querySelector('.navbar');
+    var offset = (navbar ? navbar.offsetHeight : 0) + 10;
+    var top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+    window.scrollTo({ top: top, behavior: 'smooth' });
 }
 
-function scrollToTop() {
-  const startPosition = window.pageYOffset;
-  const distance = -startPosition;
-  const duration = 1000;
-  let start = null;
+/* ---------- Lightbox (galéria + poukážky) ---------- */
 
-  function animation(currentTime) {
-    if (start === null) {
-      start = currentTime;
-    }
-    const timeElapsed = currentTime - start;
-    const run = ease(timeElapsed, startPosition, distance, duration);
-    window.scrollTo(0, run);
-    if (timeElapsed < duration) {
-      requestAnimationFrame(animation);
-    }
-  }
-
-  // Easing function for smooth scrolling
-  function ease(t, b, c, d) {
-    t /= d / 2;
-    if (t < 1) return c / 2 * t * t + b;
-    t--;
-    return -c / 2 * (t * (t - 2) - 1) + b;
-  }
-
-  requestAnimationFrame(animation);
-}
-
-var modal = document.getElementById("myModal");
-var img = document.getElementById("img01");
-var modalImg = document.getElementById("img01");
-
-document.getElementsByClassName("close")[0].onclick = function() {
-    modal.style.display = "none";
-}
-
-window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-}
+var modal = document.getElementById('myModal');
+var modalImg = document.getElementById('img01');
 
 function openBiggerImage(photoSrc) {
-    modal.style.display = "block";
     modalImg.src = photoSrc;
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+}
+
+modal.addEventListener('click', function(event) {
+    if (event.target === modal) {
+        closeModal();
+    }
+});
+
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+        closeModal();
+    }
+});
+
+/* ---------- Scroll-reveal animácie ---------- */
+/* Trieda "reveal-ready" na <html> zaručí, že bez JS ostane všetko viditeľné. */
+
+document.documentElement.classList.add('reveal-ready');
+
+document.addEventListener('DOMContentLoaded', function() {
+    var revealElements = document.querySelectorAll('.reveal');
+
+    // Po dokončení animácie odstráni reveal triedy, aby neprepisovali
+    // vlastné hover transition-y prvkov (napr. galéria).
+    function finishReveal(el) {
+        el.classList.remove('reveal');
+        el.classList.remove('revealed');
+        el.style.transitionDelay = '';
+    }
+
+    if (!('IntersectionObserver' in window)) {
+        revealElements.forEach(finishReveal);
+        return;
+    }
+
+    var revealedCount = 0;
+
+    var observer = new IntersectionObserver(function(entries) {
+        var delay = 0;
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+                entry.target.style.transitionDelay = delay + 'ms';
+                entry.target.classList.add('revealed');
+                observer.unobserve(entry.target);
+                setTimeout(finishReveal.bind(null, entry.target), 700 + delay);
+                delay = Math.min(delay + 70, 350);
+                revealedCount++;
+            }
+        });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    revealElements.forEach(function(el) { observer.observe(el); });
+
+    // Poistka: ak sa do 4 s neodhalil ani jeden prvok (napr. tab na pozadí
+    // so zastaveným vykresľovaním), zobraz všetko bez animácie.
+    setTimeout(function() {
+        if (revealedCount === 0) {
+            observer.disconnect();
+            document.querySelectorAll('.reveal').forEach(finishReveal);
+        }
+    }, 4000);
+});
+
+/* ---------- Info okná k masážam ---------- */
+
+var massageInfo = {
+    1: {
+        title: 'Klasická masáž',
+        intro: 'Klasická masáž je jedna z najrozšírenejších foriem terapie na <span class="swal-accent">uvoľnenie svalového napätia</span>, podporu krvného obehu a zlepšenie celkovej pohody.',
+        sectionTitle: 'Hlavné techniky',
+        items: [
+            ['Hladenie', 'jemné pohyby na zahriatie pokožky'],
+            ['Hnetenie', 'hlbšie pôsobenie na odstránenie napätia'],
+            ['Rázne údery', 'rytmické poklepy na stimuláciu obehu'],
+            ['Vibrovanie', 'jemné trasenie na relaxáciu'],
+        ],
+        noteLabel: 'Vhodné na:',
+        note: 'Bolesti chrbta, stres, svalovú stuhnutosť, celkovú regeneráciu',
+    },
+    2: {
+        title: 'Športová masáž',
+        intro: 'Intenzívna technika zameraná na <span class="swal-accent">svalovú regeneráciu</span>, prevenciu zranení a zvýšenie fyzického výkonu.',
+        sectionTitle: 'Hlavné techniky',
+        items: [
+            ['Hĺbková masáž', 'intenzívny tlak na hlbšie vrstvy'],
+            ['Trenie', 'rázne pohyby na stimuláciu cirkulácie'],
+            ['Stretching', 'natiahnutie svalov pre flexibilitu'],
+            ['Percusné techniky', 'rýchle údery pred výkonom'],
+        ],
+        noteLabel: 'Vhodné pre:',
+        note: 'Športovcov, aktívnych jedincov, prevenciu zranení, regeneráciu',
+    },
+    3: {
+        title: 'Relaxačná masáž',
+        intro: 'Jemná technika na <span class="swal-accent">odstránenie stresu</span>, uvoľnenie napätia a navodenie hlbokej pohody.',
+        sectionTitle: 'Hlavné techniky',
+        items: [
+            ['Jemné hladenie', 'upokojujúce pohyby'],
+            ['Pomalé hnetenie', 'bez hlbokého tlaku'],
+            ['Aromaterapia', 's esenciálnymi olejmi'],
+            ['Teplé obklady', 'zvýšený efekt uvoľnenia'],
+        ],
+        noteLabel: 'Ideálne pri:',
+        note: 'Strese, nespavosti, únave, psychickom napätí',
+    },
+    4: {
+        title: 'Mäkké techniky',
+        intro: 'Šetrné terapeutické metódy na <span class="swal-accent">uvoľnenie napätia</span> a obnovenie rovnováhy pomocou jemného prístupu.',
+        sectionTitle: 'Hlavné techniky',
+        items: [
+            ['Myofasciálna technika', 'uvoľnenie fascií'],
+            ['Mobilizácie', 'uvoľnenie kĺbov'],
+            ['Trigger point', 'odstránenie bolestivých bodov'],
+            ['PIR technika', 'obnovenie pružnosti svalov'],
+        ],
+        noteLabel: 'Vhodné na:',
+        note: 'Svalové bolesti, kĺbové problémy, chronické zápaly, relaxáciu',
+    },
+    5: {
+        title: 'Lávové kamene',
+        intro: 'Relaxačná technika využívajúca <span class="swal-accent">teplo vulkanických kameňov</span> na hlbokú relaxáciu a podporu krvného obehu.',
+        sectionTitle: 'Spôsoby aplikácie',
+        items: [
+            ['Statická aplikácia', 'kamene na energetických bodoch'],
+            ['Masáž kameňmi', 'jemné masírovanie pokožky'],
+            ['Kombinovaná terapia', 's aromaterapiou'],
+        ],
+        noteLabel: 'Účinky:',
+        note: 'Zmiernenie stresu, detoxikácia, energetická rovnováha',
+    },
+    6: {
+        title: 'Bankovanie',
+        intro: 'Tradičná metóda využívajúca <span class="swal-accent">vákuové poháre</span> na stimuláciu obehu, zmiernenie bolesti a detoxikáciu.',
+        sectionTitle: 'Spôsoby aplikácie',
+        items: [
+            ['Suché bankovanie', 'priama aplikácia pohárov'],
+            ['Mokré bankovanie', 's jemným narezaním'],
+            ['Pohyblivé bankovanie', 'posúvanie pohárov'],
+        ],
+        noteLabel: 'Účinky:',
+        note: 'Svalové bolesti, zápaly, migrény, posilnenie imunity',
+    },
+    7: {
+        title: 'Moxovanie',
+        intro: 'Starodávna čínska metóda využívajúca <span class="swal-accent">teplo z horiacej moxy</span> na stimuláciu akupunktúrnych bodov a posilnenie energie.',
+        sectionTitle: 'Spôsoby aplikácie',
+        items: [
+            ['Priama moxa', 'kužele priamo na pokožke'],
+            ['Nepriama moxa', 'cez medzičlánok (cesnak, soľ)'],
+            ['Moxovacie cigary', 'držané nad pokožkou'],
+        ],
+        noteLabel: 'Vhodné pri:',
+        note: 'Chronických ochoreniach, kĺbových bolestiach, oslabení imunity',
+    },
+    8: {
+        title: 'FUSS Terapia',
+        intro: 'Špeciálna metóda <span class="swal-accent">reflexnej masáže chodidiel</span>, ktorá stimuluje body prepojené s orgánmi a systémami tela.',
+        sectionTitle: 'Hlavné benefity',
+        items: [
+            ['Zmiernenie stresu', 'úľava od napätia a únavy'],
+            ['Podpora obehu', 'zlepšenie krvného obehu'],
+            ['Posilnenie imunity', 'aktivácia obranných síl'],
+            ['Energetická rovnováha', 'harmónia tela i mysle'],
+        ],
+        noteLabel: 'Odporúčané pre:',
+        note: 'Prevenciu, celkovú regeneráciu, harmonizáciu organizmu',
+    },
+};
+
+function buildMassageHtml(info) {
+    var itemsHtml = info.items.map(function(item) {
+        return '<div class="swal-check-item">' +
+                   '<span class="swal-check">✓</span>' +
+                   '<div><strong>' + item[0] + '</strong> – ' + item[1] + '</div>' +
+               '</div>';
+    }).join('');
+
+    return '<div class="swal-massage-content">' +
+               '<p class="swal-massage-intro">' + info.intro + '</p>' +
+               '<div class="swal-technique-box">' +
+                   '<h4>' + info.sectionTitle + '</h4>' +
+                   '<div class="swal-check-list">' + itemsHtml + '</div>' +
+               '</div>' +
+               '<p class="swal-massage-note"><strong>' + info.noteLabel + '</strong> ' + info.note + '</p>' +
+           '</div>';
 }
 
 function openSwal(id) {
-    const massages = {
-        1: {
-            title: 'Klasická masáž',
-            html: `
-                <div style="max-width: 650px; margin: 0 auto; text-align: left;">
-                    <p style="font-size: 15px; line-height: 1.7; color: #555; margin-bottom: 20px;">
-                        Klasická masáž je jedna z najrozšírenejších foriem terapie na <span style="color: #4CAF50; font-weight: 600;">uvoľnenie svalového napätia</span>, 
-                        podporu krvného obehu a zlepšenie celkovej pohody.
-                    </p>
-                    
-                    <div style="background: linear-gradient(145deg, #f8f9fa, #ffffff); padding: 20px; border-radius: 12px; margin: 20px 0; border-left: 4px solid #4CAF50;">
-                        <h4 style="margin: 0 0 15px 0; color: #2E7D32; font-size: 16px; font-weight: 600;">Hlavné techniky</h4>
-                        <div style="display: grid; gap: 10px;">
-                            <div style="display: flex; align-items: start; gap: 10px;">
-                                <span style="color: #4CAF50; font-size: 18px; font-weight: bold;">✓</span>
-                                <div><strong style="color: #2c3e50;">Hladenie</strong> – jemné pohyby na zahriatie pokožky</div>
-                            </div>
-                            <div style="display: flex; align-items: start; gap: 10px;">
-                                <span style="color: #4CAF50; font-size: 18px; font-weight: bold;">✓</span>
-                                <div><strong style="color: #2c3e50;">Hnetenie</strong> – hlbšie pôsobenie na odstránenie napätia</div>
-                            </div>
-                            <div style="display: flex; align-items: start; gap: 10px;">
-                                <span style="color: #4CAF50; font-size: 18px; font-weight: bold;">✓</span>
-                                <div><strong style="color: #2c3e50;">Rázne údery</strong> – rytmické poklepy na stimuláciu obehu</div>
-                            </div>
-                            <div style="display: flex; align-items: start; gap: 10px;">
-                                <span style="color: #4CAF50; font-size: 18px; font-weight: bold;">✓</span>
-                                <div><strong style="color: #2c3e50;">Vibrovanie</strong> – jemné trasenie na relaxáciu</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <p style="font-size: 14px; color: #666; margin-top: 15px; padding: 12px; background: #f0f8f0; border-radius: 8px;">
-                        <strong style="color: #2E7D32;">Vhodné na:</strong> Bolesti chrbta, stres, svalovú stuhnutosť, celkovú regeneráciu
-                    </p>
-                </div>
-            `        
-        },
-        2: {
-            title: 'Športová masáž',
-            html: `
-                <div style="max-width: 650px; margin: 0 auto; text-align: left;">
-                    <p style="font-size: 15px; line-height: 1.7; color: #555; margin-bottom: 20px;">
-                        Intenzívna technika zameraná na <span style="color: #4CAF50; font-weight: 600;">svalovú regeneráciu</span>, 
-                        prevenciu zranení a zvýšenie fyzického výkonu.
-                    </p>
-                    
-                    <div style="background: linear-gradient(145deg, #f8f9fa, #ffffff); padding: 20px; border-radius: 12px; margin: 20px 0; border-left: 4px solid #4CAF50;">
-                        <h4 style="margin: 0 0 15px 0; color: #2E7D32; font-size: 16px; font-weight: 600;">Hlavné techniky</h4>
-                        <div style="display: grid; gap: 10px;">
-                            <div style="display: flex; align-items: start; gap: 10px;">
-                                <span style="color: #4CAF50; font-size: 18px; font-weight: bold;">✓</span>
-                                <div><strong style="color: #2c3e50;">Hĺbková masáž</strong> – intenzívny tlak na hlbšie vrstvy</div>
-                            </div>
-                            <div style="display: flex; align-items: start; gap: 10px;">
-                                <span style="color: #4CAF50; font-size: 18px; font-weight: bold;">✓</span>
-                                <div><strong style="color: #2c3e50;">Trenie</strong> – rázne pohyby na stimuláciu cirkulácie</div>
-                            </div>
-                            <div style="display: flex; align-items: start; gap: 10px;">
-                                <span style="color: #4CAF50; font-size: 18px; font-weight: bold;">✓</span>
-                                <div><strong style="color: #2c3e50;">Stretching</strong> – natiahnutie svalov pre flexibilitu</div>
-                            </div>
-                            <div style="display: flex; align-items: start; gap: 10px;">
-                                <span style="color: #4CAF50; font-size: 18px; font-weight: bold;">✓</span>
-                                <div><strong style="color: #2c3e50;">Percusné techniky</strong> – rýchle údery pred výkonom</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <p style="font-size: 14px; color: #666; margin-top: 15px; padding: 12px; background: #f0f8f0; border-radius: 8px;">
-                        <strong style="color: #2E7D32;">Vhodné pre:</strong> Športovcov, aktívnych jedincov, prevenciu zranení, regeneráciu
-                    </p>
-                </div>
-            `        
-        },
-        3: {
-            title: 'Relaxačná masáž',
-            html: `
-                <div style="max-width: 650px; margin: 0 auto; text-align: left;">
-                    <p style="font-size: 15px; line-height: 1.7; color: #555; margin-bottom: 20px;">
-                        Jemná technika na <span style="color: #4CAF50; font-weight: 600;">odstránenie stresu</span>, 
-                        uvoľnenie napätia a navodenie hlbokej pohody.
-                    </p>
-                    
-                    <div style="background: linear-gradient(145deg, #f8f9fa, #ffffff); padding: 20px; border-radius: 12px; margin: 20px 0; border-left: 4px solid #4CAF50;">
-                        <h4 style="margin: 0 0 15px 0; color: #2E7D32; font-size: 16px; font-weight: 600;">Hlavné techniky</h4>
-                        <div style="display: grid; gap: 10px;">
-                            <div style="display: flex; align-items: start; gap: 10px;">
-                                <span style="color: #4CAF50; font-size: 18px; font-weight: bold;">✓</span>
-                                <div><strong style="color: #2c3e50;">Jemné hladenie</strong> – upokojujúce pohyby</div>
-                            </div>
-                            <div style="display: flex; align-items: start; gap: 10px;">
-                                <span style="color: #4CAF50; font-size: 18px; font-weight: bold;">✓</span>
-                                <div><strong style="color: #2c3e50;">Pomalé hnetenie</strong> – bez hlbokého tlaku</div>
-                            </div>
-                            <div style="display: flex; align-items: start; gap: 10px;">
-                                <span style="color: #4CAF50; font-size: 18px; font-weight: bold;">✓</span>
-                                <div><strong style="color: #2c3e50;">Aromaterapia</strong> – s esenciálnymi olejmi</div>
-                            </div>
-                            <div style="display: flex; align-items: start; gap: 10px;">
-                                <span style="color: #4CAF50; font-size: 18px; font-weight: bold;">✓</span>
-                                <div><strong style="color: #2c3e50;">Teplé obklady</strong> – zvýšený efekt uvoľnenia</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <p style="font-size: 14px; color: #666; margin-top: 15px; padding: 12px; background: #f0f8f0; border-radius: 8px;">
-                        <strong style="color: #2E7D32;">Ideálne pri:</strong> Strese, nespavosti, únave, psychickom napätí
-                    </p>
-                </div>
-            `
-        },
-        4: {
-            title: 'Mäkké techniky',
-            html: `
-                <div style="max-width: 650px; margin: 0 auto; text-align: left;">
-                    <p style="font-size: 15px; line-height: 1.7; color: #555; margin-bottom: 20px;">
-                        Šetrné terapeutické metódy na <span style="color: #4CAF50; font-weight: 600;">uvoľnenie napätia</span> 
-                        a obnovenie rovnováhy pomocou jemného prístupu.
-                    </p>
-                    
-                    <div style="background: linear-gradient(145deg, #f8f9fa, #ffffff); padding: 20px; border-radius: 12px; margin: 20px 0; border-left: 4px solid #4CAF50;">
-                        <h4 style="margin: 0 0 15px 0; color: #2E7D32; font-size: 16px; font-weight: 600;">Hlavné techniky</h4>
-                        <div style="display: grid; gap: 10px;">
-                            <div style="display: flex; align-items: start; gap: 10px;">
-                                <span style="color: #4CAF50; font-size: 18px; font-weight: bold;">✓</span>
-                                <div><strong style="color: #2c3e50;">Myofasciálna technika</strong> – uvoľnenie fascií</div>
-                            </div>
-                            <div style="display: flex; align-items: start; gap: 10px;">
-                                <span style="color: #4CAF50; font-size: 18px; font-weight: bold;">✓</span>
-                                <div><strong style="color: #2c3e50;">Mobilizácie</strong> – uvoľnenie kĺbov</div>
-                            </div>
-                            <div style="display: flex; align-items: start; gap: 10px;">
-                                <span style="color: #4CAF50; font-size: 18px; font-weight: bold;">✓</span>
-                                <div><strong style="color: #2c3e50;">Trigger point</strong> – odstránenie bolestivých bodov</div>
-                            </div>
-                            <div style="display: flex; align-items: start; gap: 10px;">
-                                <span style="color: #4CAF50; font-size: 18px; font-weight: bold;">✓</span>
-                                <div><strong style="color: #2c3e50;">PIR technika</strong> – obnovenie pružnosti svalov</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <p style="font-size: 14px; color: #666; margin-top: 15px; padding: 12px; background: #f0f8f0; border-radius: 8px;">
-                        <strong style="color: #2E7D32;">Vhodné na:</strong> Svalové bolesti, kĺbové problémy, chronické zápaly, relaxáciu
-                    </p>
-                </div>
-            `
-        },
-        5: {
-            title: 'Lávové kamene',
-            html: `
-                <div style="max-width: 650px; margin: 0 auto; text-align: left;">
-                    <p style="font-size: 15px; line-height: 1.7; color: #555; margin-bottom: 20px;">
-                        Relaxačná technika využívajúca <span style="color: #4CAF50; font-weight: 600;">teplo vulkanických kameňov</span> 
-                        na hlbokú relaxáciu a podporu krvného obehu.
-                    </p>
-                    
-                    <div style="background: linear-gradient(145deg, #f8f9fa, #ffffff); padding: 20px; border-radius: 12px; margin: 20px 0; border-left: 4px solid #4CAF50;">
-                        <h4 style="margin: 0 0 15px 0; color: #2E7D32; font-size: 16px; font-weight: 600;">Spôsoby aplikácie</h4>
-                        <div style="display: grid; gap: 10px;">
-                            <div style="display: flex; align-items: start; gap: 10px;">
-                                <span style="color: #4CAF50; font-size: 18px; font-weight: bold;">✓</span>
-                                <div><strong style="color: #2c3e50;">Statická aplikácia</strong> – kamene na energetických bodoch</div>
-                            </div>
-                            <div style="display: flex; align-items: start; gap: 10px;">
-                                <span style="color: #4CAF50; font-size: 18px; font-weight: bold;">✓</span>
-                                <div><strong style="color: #2c3e50;">Masáž kameňmi</strong> – jemné masírovanie pokožky</div>
-                            </div>
-                            <div style="display: flex; align-items: start; gap: 10px;">
-                                <span style="color: #4CAF50; font-size: 18px; font-weight: bold;">✓</span>
-                                <div><strong style="color: #2c3e50;">Kombinovaná terapia</strong> – s aromaterapiou</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <p style="font-size: 14px; color: #666; margin-top: 15px; padding: 12px; background: #f0f8f0; border-radius: 8px;">
-                        <strong style="color: #2E7D32;">Účinky:</strong> Zmiernenie stresu, detoxikácia, energetická rovnováha
-                    </p>
-                </div>
-            `        
-        },
-        6: {
-            title: 'Bankovanie',
-            html: `
-                <div style="max-width: 650px; margin: 0 auto; text-align: left;">
-                    <p style="font-size: 15px; line-height: 1.7; color: #555; margin-bottom: 20px;">
-                        Tradičná metóda využívajúca <span style="color: #4CAF50; font-weight: 600;">vákuové poháre</span> 
-                        na stimuláciu obehu, zmiernenie bolesti a detoxikáciu.
-                    </p>
-                    
-                    <div style="background: linear-gradient(145deg, #f8f9fa, #ffffff); padding: 20px; border-radius: 12px; margin: 20px 0; border-left: 4px solid #4CAF50;">
-                        <h4 style="margin: 0 0 15px 0; color: #2E7D32; font-size: 16px; font-weight: 600;">Spôsoby aplikácie</h4>
-                        <div style="display: grid; gap: 10px;">
-                            <div style="display: flex; align-items: start; gap: 10px;">
-                                <span style="color: #4CAF50; font-size: 18px; font-weight: bold;">✓</span>
-                                <div><strong style="color: #2c3e50;">Suché bankovanie</strong> – priama aplikácia pohárov</div>
-                            </div>
-                            <div style="display: flex; align-items: start; gap: 10px;">
-                                <span style="color: #4CAF50; font-size: 18px; font-weight: bold;">✓</span>
-                                <div><strong style="color: #2c3e50;">Mokré bankovanie</strong> – s jemným narezaním</div>
-                            </div>
-                            <div style="display: flex; align-items: start; gap: 10px;">
-                                <span style="color: #4CAF50; font-size: 18px; font-weight: bold;">✓</span>
-                                <div><strong style="color: #2c3e50;">Pohyblivé bankovanie</strong> – posúvanie pohárov</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <p style="font-size: 14px; color: #666; margin-top: 15px; padding: 12px; background: #f0f8f0; border-radius: 8px;">
-                        <strong style="color: #2E7D32;">Účinky:</strong> Svalové bolesti, zápaly, migrény, posilnenie imunity
-                    </p>
-                </div>
-            `
-        
-        },
-        7: {
-            title: 'Moxovanie',
-            html: `
-                <div style="max-width: 650px; margin: 0 auto; text-align: left;">
-                    <p style="font-size: 15px; line-height: 1.7; color: #555; margin-bottom: 20px;">
-                        Starodávna čínska metóda využívajúca <span style="color: #4CAF50; font-weight: 600;">teplo z horiacej moxy</span> 
-                        na stimuláciu akupunktúrnych bodov a posilnenie energie.
-                    </p>
-                    
-                    <div style="background: linear-gradient(145deg, #f8f9fa, #ffffff); padding: 20px; border-radius: 12px; margin: 20px 0; border-left: 4px solid #4CAF50;">
-                        <h4 style="margin: 0 0 15px 0; color: #2E7D32; font-size: 16px; font-weight: 600;">Spôsoby aplikácie</h4>
-                        <div style="display: grid; gap: 10px;">
-                            <div style="display: flex; align-items: start; gap: 10px;">
-                                <span style="color: #4CAF50; font-size: 18px; font-weight: bold;">✓</span>
-                                <div><strong style="color: #2c3e50;">Priama moxa</strong> – kužele priamo na pokožke</div>
-                            </div>
-                            <div style="display: flex; align-items: start; gap: 10px;">
-                                <span style="color: #4CAF50; font-size: 18px; font-weight: bold;">✓</span>
-                                <div><strong style="color: #2c3e50;">Nepriama moxa</strong> – cez medzičlánok (cesnak, soľ)</div>
-                            </div>
-                            <div style="display: flex; align-items: start; gap: 10px;">
-                                <span style="color: #4CAF50; font-size: 18px; font-weight: bold;">✓</span>
-                                <div><strong style="color: #2c3e50;">Moxovacie cigary</strong> – držané nad pokožkou</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <p style="font-size: 14px; color: #666; margin-top: 15px; padding: 12px; background: #f0f8f0; border-radius: 8px;">
-                        <strong style="color: #2E7D32;">Vhodné pri:</strong> Chronických ochoreniach, kĺbových bolestiach, oslabení imunity
-                    </p>
-                </div>
-            `        
-        },
-        8: {
-            title: 'FUSS Terapia',
-            html: `
-                <div style="max-width: 650px; margin: 0 auto; text-align: left;">
-                    <p style="font-size: 15px; line-height: 1.7; color: #555; margin-bottom: 20px;">
-                        Špeciálna metóda <span style="color: #4CAF50; font-weight: 600;">reflexnej masáže chodidiel</span>, 
-                        ktorá stimuluje body prepojené s orgánmi a systémami tela.
-                    </p>
-                    
-                    <div style="background: linear-gradient(145deg, #f8f9fa, #ffffff); padding: 20px; border-radius: 12px; margin: 20px 0; border-left: 4px solid #4CAF50;">
-                        <h4 style="margin: 0 0 15px 0; color: #2E7D32; font-size: 16px; font-weight: 600;">Hlavné benefity</h4>
-                        <div style="display: grid; gap: 10px;">
-                            <div style="display: flex; align-items: start; gap: 10px;">
-                                <span style="color: #4CAF50; font-size: 18px; font-weight: bold;">✓</span>
-                                <div><strong style="color: #2c3e50;">Zmiernenie stresu</strong> – úľava od napätia a únavy</div>
-                            </div>
-                            <div style="display: flex; align-items: start; gap: 10px;">
-                                <span style="color: #4CAF50; font-size: 18px; font-weight: bold;">✓</span>
-                                <div><strong style="color: #2c3e50;">Podpora obehu</strong> – zlepšenie krvného obehu</div>
-                            </div>
-                            <div style="display: flex; align-items: start; gap: 10px;">
-                                <span style="color: #4CAF50; font-size: 18px; font-weight: bold;">✓</span>
-                                <div><strong style="color: #2c3e50;">Posilnenie imunity</strong> – aktivácia obranných síl</div>
-                            </div>
-                            <div style="display: flex; align-items: start; gap: 10px;">
-                                <span style="color: #4CAF50; font-size: 18px; font-weight: bold;">✓</span>
-                                <div><strong style="color: #2c3e50;">Energetická rovnováha</strong> – harmónia tela i mysle</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <p style="font-size: 14px; color: #666; margin-top: 15px; padding: 12px; background: #f0f8f0; border-radius: 8px;">
-                        <strong style="color: #2E7D32;">Odporúčané pre:</strong> Prevenciu, celkovú regeneráciu, harmonizáciu organizmu
-                    </p>
-                </div>
-            `
-        }
-    };
+    var info = massageInfo[id];
+    if (!info) return;
 
-    if (massages[id]) {
-        Swal.fire({
-            title: massages[id].title,
-            width: '800px',
-            html: massages[id].html,
-            confirmButtonText: 'Zavrieť',
-            confirmButtonColor: '#4CAF50',
-            background: "#ffffff",
-            customClass: {
-                title: 'swal-title-custom',
-                popup: 'swal-popup-custom'
-            },
-            didOpen: () => {
-                const style = document.createElement('style');
-                style.textContent = `
-                    .swal-title-custom {
-                        color: #2E7D32 !important;
-                        font-size: 26px !important;
-                        font-weight: 600 !important;
-                        padding: 20px 20px 10px 20px !important;
-                    }
-                    .swal-popup-custom {
-                        border-radius: 16px !important;
-                        padding: 0 !important;
-                    }
-                    .swal2-html-container {
-                        padding: 0 20px 20px 20px !important;
-                        margin: 0 !important;
-                    }
-                `;
-                document.head.appendChild(style);
-            }
-        });
-    }
+    Swal.fire({
+        title: info.title,
+        width: '800px',
+        html: buildMassageHtml(info),
+        confirmButtonText: 'Zavrieť',
+        confirmButtonColor: '#4CAF50',
+        background: '#ffffff',
+        customClass: {
+            title: 'swal-title-custom',
+            popup: 'swal-popup-custom'
+        }
+    });
 }
