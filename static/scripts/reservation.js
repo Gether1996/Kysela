@@ -86,11 +86,17 @@ function moveToBottom() {
     }, 250);
 }
 
-function resetDateInput() {
-    var dateInput = document.getElementById("date");
-    if (dateInput) {
-        if (dateInput.value) {
-            dateInput.value = "";
+function setSelectedDate(isoDate) {
+    var dateInput = document.getElementById('date');
+    var display = document.getElementById('selected-date-display');
+    dateInput.value = isoDate || '';
+    if (display) {
+        if (isoDate) {
+            display.textContent = formatDate(isoDate);
+            display.classList.add('has-date');
+        } else {
+            display.textContent = 'DD.MM.YYYY';
+            display.classList.remove('has-date');
         }
     }
 }
@@ -284,29 +290,6 @@ function deleteSavedPerson(id, name_surname) {
     });
 }
 
-$(document).ready(function() {
-  // Function to add highlight to the cell
-  function addHighlight(cell) {
-    if (cell.find('.fc-event').length > 0) { // Check if there are any events in this cell
-      cell.addClass('highlight-cell');
-    }
-  }
-
-  // Function to remove highlight from the cell
-  function removeHighlight(cell) {
-    cell.removeClass('highlight-cell');
-  }
-
-  // Hover over the entire day cell
-  $(document).on('mouseenter', '.fc-daygrid-day', function() {
-    addHighlight($(this));
-  });
-
-  $(document).on('mouseleave', '.fc-daygrid-day', function() {
-    removeHighlight($(this));
-  });
-});
-
 function pickDate(clickedDateElement = null) {
     if (clickedDateElement) {
         // Remove the class from any previously clicked date (if needed)
@@ -334,7 +317,6 @@ function pickDate(clickedDateElement = null) {
     });
 
     timeSlotContainer.innerHTML = '';
-    selectedDate.style.border = '1px solid black';
 
     Swal.fire({
         allowOutsideClick: false, // Prevent closing by clicking outside
@@ -644,11 +626,12 @@ function createReservation() {
 
 document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
-    var dateInput = document.getElementById('date');
 
     calendar = new FullCalendar.Calendar(calendarEl, {
 
         initialView: 'dayGridMonth',
+        height: 'auto',
+        fixedWeekCount: false,
         eventTimeFormat: {
             hour12: false,
             hour: 'numeric',
@@ -679,8 +662,7 @@ document.addEventListener('DOMContentLoaded', function() {
               return;
           }
 
-          const formattedDate = info.dateStr;
-          dateInput.value = formattedDate;
+          setSelectedDate(info.dateStr);
           pickDate(info.dayEl);
         },
 
@@ -694,8 +676,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
-            const formattedDate = info.event.startStr;
-            dateInput.value = formattedDate;
+            setSelectedDate(info.event.startStr);
 
             const dayCellSelector = `.fc-day[data-date="${info.event.startStr.split('T')[0]}"]`;
             const dayCellElement = document.querySelector(dayCellSelector);
@@ -738,7 +719,6 @@ function updateEvents() {
     const previouslySelected = document.querySelector('.selected-date');
     const userSelectButton = document.querySelector('.user-select');
     const pickedTimeSlot = document.getElementById('picked-time-slot');
-    const selectedDate = document.getElementById('date');
     if (previouslySelected) {
         previouslySelected.classList.remove('selected-date');
     }
@@ -749,7 +729,7 @@ function updateEvents() {
         userSelectButton.remove();
     }
 
-    selectedDate.value = "";
+    setSelectedDate('');
 
     hideFirst();
     hideSecond();

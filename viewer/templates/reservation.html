@@ -11,68 +11,169 @@
     <style>
         #calendar {
             width: 60%;
-            height: 450px;
-            border: 1px solid black;
-            padding: 10px;
-            margin-bottom: 10px;
-        }
-        .fc-header-toolbar { /* Target the entire header toolbar */
-          font-size: 0.8rem; /* Reduce font size */
-        }
-
-        :root {
-            --fc-event-bg-color: #3fbb46;
-            --fc-event-border-color: #3fbb46;
-            --fc-highlight-color: #9fdba7;
+            max-width: 980px;
+            background: #fff;
+            border: 1px solid var(--border-light);
+            border-radius: 16px;
+            padding: 18px 20px;
+            margin-bottom: 25px;
+            box-shadow: var(--shadow-card);
         }
 
-        .fc-left button, .fc-right button { /* Target buttons on left and right */
-          padding: 5px 8px; /* Reduce button padding */
+        /* Hlavička kalendára */
+        #calendar .fc-toolbar-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-dark);
+            text-transform: capitalize;
         }
 
-        .fc-daygrid-day { /* Target the day cell class */
-          font-size: 15px !important; /* Adjust font size as needed */
+        #calendar .fc-button {
+            background: var(--green-gradient);
+            border: none;
+            border-radius: 8px;
+            padding: 6px 14px;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: none;
+            transition: opacity 0.2s ease;
         }
 
-        .fc-daygrid-day {
-            transition: 0.2s;
+        #calendar .fc-button:hover {
+            opacity: 0.88;
         }
 
-        .fc-day:hover {
+        #calendar .fc-button:focus,
+        #calendar .fc-button:active {
+            box-shadow: none !important;
+        }
+
+        #calendar .fc-button:disabled {
+            background: #c9d3ca;
+            opacity: 1;
+        }
+
+        /* Názvy dní */
+        #calendar .fc-col-header-cell {
+            background: transparent;
+            padding: 10px 0;
+            border: none;
+        }
+
+        #calendar .fc-col-header-cell-cushion {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #8a939c;
+            text-decoration: none;
+        }
+
+        /* Bunky dní */
+        #calendar {
+            --fc-border-color: #eef1f4;
+            --fc-today-bg-color: transparent;
+        }
+
+        #calendar .fc-daygrid-day {
+            transition: background-color 0.2s ease;
+        }
+
+        #calendar .fc-daygrid-day-frame {
+            min-height: 62px;
+            padding: 2px;
+        }
+
+        #calendar .fc-daygrid-day-top {
+            justify-content: center;
+        }
+
+        #calendar .fc-daygrid-day-number {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-dark);
+            padding: 4px 6px 2px;
+        }
+
+        /* Nedostupné dni */
+        .custom-day-class {
+            background-color: #f5f6f8 !important;
+        }
+
+        .custom-day-class .fc-daygrid-day-number,
+        #calendar .fc-day-other .fc-daygrid-day-number,
+        #calendar .fc-day-past .fc-daygrid-day-number {
+            color: #bcc3ca;
+            font-weight: 400;
+        }
+
+        .custom-day-class:hover,
+        #calendar .fc-day-past:hover {
+            cursor: not-allowed;
+        }
+
+        /* Dostupné dni (s voľnými termínmi) */
+        #calendar .fc-daygrid-day:not(.custom-day-class):has(.fc-event) {
             cursor: pointer;
         }
 
-        .fc-day-past:hover {
-            cursor: not-allowed;
+        #calendar .fc-daygrid-day:not(.custom-day-class):has(.fc-event):hover {
+            background-color: #eaf6eb;
         }
 
-        .custom-day-class {
-            background-color: #bebebe;
+        /* Dnešný deň */
+        #calendar .fc-day-today {
+            box-shadow: inset 0 0 0 2px var(--green);
         }
 
-        .fc-col-header-cell {
-            background-color: white;
+        /* Vybraný deň */
+        #calendar .selected-date {
+            background-color: #e8f5e9 !important;
+            box-shadow: inset 0 0 0 2px var(--green);
         }
 
-        .custom-day-class:hover {
-            cursor: not-allowed;
+        /* Pilulky s počtom voľných termínov */
+        #calendar .fc-daygrid-event {
+            background: var(--green-gradient);
+            border: none;
+            border-radius: 6px;
+            margin: 2px 5px 5px;
+            padding: 3px 4px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s ease;
         }
 
-        .fc-col-header-cell {
-            font-size: 15px;
+        #calendar .fc-daygrid-event:hover {
+            opacity: 0.88;
         }
 
-        .fc-daygrid-day-number {
-          margin: auto;
-          font-size: 18px;
+        #calendar .fc-event-title {
+            text-align: center;
         }
 
-        .fc-daygrid-day-frame {
-            height: 50px;
+        /* Zobrazenie vybraného dátumu */
+        .selected-date-display {
+            width: 50%;
+            max-width: 420px;
+            text-align: center;
+            font-size: 22px;
+            font-weight: 600;
+            padding: 12px 20px;
+            border: 2px dashed #cfd6dc;
+            border-radius: 12px;
+            color: #aab3bb;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            transition: color 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
         }
 
-        .fc-daygrid-day.fc-day-today {
-            background-color: #bebebe !important;
+        .selected-date-display.has-date {
+            border: 2px solid var(--green);
+            color: var(--green-dark);
+            background: #f0f8f0;
+            letter-spacing: 1px;
         }
 
         .swal2-user-select-list {
@@ -85,11 +186,36 @@
 
         @media screen and (max-width: 500px) {
             #calendar {
-                width: 105%;
-                height: 450px;
-                border: 1px solid black;
+                width: 100%;
                 padding: 10px;
-                margin-bottom: 10px;
+                border-radius: 12px;
+            }
+
+            #calendar .fc-toolbar-title {
+                font-size: 17px;
+            }
+
+            #calendar .fc-button {
+                padding: 5px 10px;
+                font-size: 12px;
+            }
+
+            #calendar .fc-daygrid-day-frame {
+                min-height: 52px;
+            }
+
+            #calendar .fc-daygrid-day-number {
+                font-size: 13px;
+            }
+
+            #calendar .fc-daygrid-event {
+                font-size: 10px;
+                margin: 1px 2px 3px;
+            }
+
+            .selected-date-display {
+                width: 85%;
+                font-size: 17px;
             }
 
             .swal2-user-select-list {
@@ -135,7 +261,8 @@
 
                 <h2>{% trans 'Vyberte Dátum' %}:</h2>
                 <div class="calendar" id="calendar"></div>
-                <input type="date" id="date" class="insert-date-add-truck" onchange="pickDate()" readonly>
+                <input type="hidden" id="date">
+                <div id="selected-date-display" class="selected-date-display">DD.MM.YYYY</div>
 
                 <h2 style="text-align: center;" class="hidden-element-first add-hidden-first">{% trans 'Vyberte začiatok masáže' %}:</h2>
                 <div id="time-slot-container" class="hidden-element-first add-hidden-first time-slot-container"></div>
