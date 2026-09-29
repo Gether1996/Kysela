@@ -17,5 +17,5 @@ RUN python manage.py collectstatic --noinput
 # Expose the port the Django app runs on
 EXPOSE 8000
 
-# Run the Django app with gunicorn
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "3", "Roman.wsgi:application"]
+# Apply database migrations, then run the Django app with gunicorn
+CMD ["sh", "-c", "python manage.py migrate --noinput && gunicorn --bind 0.0.0.0:8000 --workers 3 Roman.wsgi:application"]
